@@ -1,0 +1,50 @@
+const Ajv = require('ajv').default;
+const {
+  formatReferences,
+  recursiveOmit,
+} = require('./utils');
+
+const validate = (swaggerObject) => {
+  const defsSchema = {
+    $id: 'defs.json',
+    definitions: {
+      components: recursiveOmit(swaggerObject.components),
+    },
+  };
+  const ajv = new Ajv({
+    schemas: [defsSchema],
+  });
+
+  const _validate = (value, schema) => {
+    const validateSchema = ajv.compile(schema);
+    const valid = validateSchema(value);
+    if (!valid) return console.log(validateSchema.errors);
+    console.log('no errors');
+    return console.log(valid);
+  };
+
+  const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
+    let requestBodySchema = { ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema };
+    requestBodySchema = formatReferences(requestBodySchema);
+    return _validate(value, requestBodySchema);
+  };
+
+  const validateParam = type => (value, key, endpoint, method) => {
+    const parameter = swaggerObject.paths[endpoint][method].parameters
+      .filter(({ in: paramType }) => paramType === type)
+      .find(({ name }) => name === key);
+    if (!parameter) return console.log('Missing parameter');
+    let parametersSchema = parameter.schema;
+    parametersSchema = formatReferences(parametersSchema);
+    return _validate(value, parametersSchema);
+  };
+
+  return {
+    validateRequest,
+    validateQueryParam: validateParam('query'),
+    validatePathParam: validateParam('path'),
+    validateHeaderParam: validateParam('header'),
+  };
+};
+
+module.exports = validate;
