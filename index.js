@@ -6,10 +6,14 @@ const {
   errors,
 } = require('./utils');
 
-const validate = swaggerObject => {
+const DEFAULT_CONFIG = {
+  ajvConfig: {},
+};
+
+const validate = (swaggerObject, options = DEFAULT_CONFIG) => {
   const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
   if (!inputParameterValid) {
-    throw errors.basicError(errorMessage);
+    throw errors.basicError(errorMessage, options.errorHandler);
   }
   const defsSchema = {
     $id: 'defs.json',
@@ -19,6 +23,7 @@ const validate = swaggerObject => {
   };
   const ajv = new Ajv({
     schemas: [defsSchema],
+    ...options.ajvConfig,
   });
 
   const schemaValidation = (value, schema) => {
@@ -54,7 +59,5 @@ const validate = swaggerObject => {
     validateHeaderParam: validateParam('header'),
   };
 };
-
-validate();
 
 module.exports = validate;

@@ -9,7 +9,10 @@ function InputValidationError(message, type, extra) {
 }
 util.inherits(InputValidationError, Error);
 
-const errorMethod = type => (message, extra) => {
+const errorMethod = (type, handler) => (message, extra) => {
+  if (handler) {
+    return handler(message, extra);
+  }
   const error = new InputValidationError(message, type, extra);
   throw error;
 };
