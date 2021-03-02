@@ -3,17 +3,13 @@ const {
   formatReferences,
   recursiveOmit,
   inputValidation,
+  errors,
 } = require('./utils');
-
-const errorMethod = message => {
-  const error = new Error(message);
-  throw error;
-};
 
 const validate = swaggerObject => {
   const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
   if (!inputParameterValid) {
-    throw errorMethod(errorMessage);
+    throw errors.basicError(errorMessage);
   }
   const defsSchema = {
     $id: 'defs.json',
@@ -58,5 +54,7 @@ const validate = swaggerObject => {
     validateHeaderParam: validateParam('header'),
   };
 };
+
+validate();
 
 module.exports = validate;
