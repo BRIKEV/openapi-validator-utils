@@ -2,9 +2,19 @@ const Ajv = require('ajv').default;
 const {
   formatReferences,
   recursiveOmit,
+  inputValidation,
 } = require('./utils');
 
+const errorMethod = message => {
+  const error = new Error(message);
+  throw error;
+};
+
 const validate = swaggerObject => {
+  const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
+  if (!inputParameterValid) {
+    throw errorMethod(errorMessage);
+  }
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
