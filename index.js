@@ -4,7 +4,7 @@ const {
   recursiveOmit,
 } = require('./utils');
 
-const validate = (swaggerObject) => {
+const validate = swaggerObject => {
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
@@ -15,7 +15,7 @@ const validate = (swaggerObject) => {
     schemas: [defsSchema],
   });
 
-  const _validate = (value, schema) => {
+  const schemaValidation = (value, schema) => {
     const validateSchema = ajv.compile(schema);
     const valid = validateSchema(value);
     if (!valid) return console.log(validateSchema.errors);
@@ -24,9 +24,11 @@ const validate = (swaggerObject) => {
   };
 
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
-    let requestBodySchema = { ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema };
+    let requestBodySchema = {
+      ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema,
+    };
     requestBodySchema = formatReferences(requestBodySchema);
-    return _validate(value, requestBodySchema);
+    return schemaValidation(value, requestBodySchema);
   };
 
   const validateParam = type => (value, key, endpoint, method) => {
@@ -36,7 +38,7 @@ const validate = (swaggerObject) => {
     if (!parameter) return console.log('Missing parameter');
     let parametersSchema = parameter.schema;
     parametersSchema = formatReferences(parametersSchema);
-    return _validate(value, parametersSchema);
+    return schemaValidation(value, parametersSchema);
   };
 
   return {

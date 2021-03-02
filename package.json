@@ -1,0 +1,46 @@
+{
+  "name": "openapi-validator-utils",
+  "version": "1.0.0",
+  "description": "OpenAPI request, parameters, headers and response validator methods",
+  "main": "index.js",
+  "dependencies": {
+    "ajv": "^7.1.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.5",
+    "husky": "^5.1.3",
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "./node_modules/.bin/eslint ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BRIKEV/openapi-validator-utils.git"
+  },
+  "keywords": [
+    "openapi",
+    "validator",
+    "request",
+    "response",
+    "swagger",
+    "utils"
+  ],
+  "author": "BRIKEV (https://github.com/BRIKEV)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BRIKEV/openapi-validator-utils/issues"
+  },
+  "homepage": "https://github.com/BRIKEV/openapi-validator-utils#readme"
+}
