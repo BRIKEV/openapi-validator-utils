@@ -3,17 +3,21 @@ const {
   formatReferences,
   recursiveOmit,
   inputValidation,
+  optionsValidation,
   errors,
 } = require('./utils');
 
-const DEFAULT_CONFIG = {
-  ajvConfig: {},
-};
-
-const validate = (swaggerObject, options = DEFAULT_CONFIG) => {
+const validate = (swaggerObject, options) => {
   const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
+  const errorHandler = options ? options.errorHandler : null;
   if (!inputParameterValid) {
-    throw errors.basicError(errorMessage, options.errorHandler);
+    throw errors.basicError(errorMessage, errorHandler);
+  }
+  const {
+    valid: optionsValid, errorMessage: optionsErrorMessage,
+  } = optionsValidation(options);
+  if (!optionsValid) {
+    throw errors.basicError(optionsErrorMessage, errorHandler);
   }
   const defsSchema = {
     $id: 'defs.json',
@@ -23,7 +27,7 @@ const validate = (swaggerObject, options = DEFAULT_CONFIG) => {
   };
   const ajv = new Ajv({
     schemas: [defsSchema],
-    ...options.ajvConfig,
+    ...(options.ajvConfig || {}),
   });
 
   const schemaValidation = (value, schema) => {
