@@ -21,6 +21,7 @@ instance.on('finish', data => {
   const dataStringified = JSON.stringify(data, null, 2);
   fs.writeFile('mock.json', dataStringified, err => {
     if (err) return console.error(`Error generating mocks ${err}`);
+    return console.log('Save mock');
   });
 });
 

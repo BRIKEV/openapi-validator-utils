@@ -4,6 +4,7 @@ const {
   recursiveOmit,
   inputValidation,
   optionsValidation,
+  argsValidation,
   errors,
 } = require('./utils');
 
@@ -41,9 +42,9 @@ const validate = (swaggerObject, options = {}) => {
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
     const {
       valid: validArgs, errorMessage: argsErrorMessage,
-    } = validateArgs(value, endpoint, method);
-    if (!optionsValid) {
-      throw errors.basicError(optionsErrorMessage, errorHandler);
+    } = argsValidation(value, endpoint, method);
+    if (!validArgs) {
+      throw errors.basicError(argsErrorMessage, errorHandler);
     }
     let requestBodySchema = {
       ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema,
