@@ -57,16 +57,28 @@ describe('validateQueryParam method', () => {
       }).toThrow('Error in params: should be string. You provide "false"');
     });
 
+    it('should throw errors when array of string type is not valid', () => {
+      expect(() => {
+        validateQueryParam(false, 'name', '/api/v1', 'get');
+      }).toThrow('Error in params: should be string. You provide "false"');
+    });
+
     it('should throw errors when basic type is not a valid value of the enum list', () => {
       expect(() => {
         validateQueryParam('test', 'name', '/api/v1', 'get');
       }).toThrow('Error in params: should be equal to one of the allowed values: type1, type2. You provide "test"');
     });
 
-    it('should throw errors when reference type is not valid', () => {
+    it('should throw errors when multiple query params are not valid', () => {
       expect(() => {
         validateQueryParam(1234, 'license', '/api/v1/albums', 'get');
       }).toThrow('Error in params: should be string. You provide "1234"');
+    });
+
+    it('should throw errors when multiple query params are not valid', () => {
+      expect(() => {
+        validateQueryParam([1], 'name', '/api/v1/albums/{id}', 'get');
+      }).toThrow('Error in params: Array should be string items. You provide "[1]"');
     });
 
     it('should throw errors when reference key is not found', () => {
@@ -74,16 +86,10 @@ describe('validateQueryParam method', () => {
         validateQueryParam('MIT', 'licenses', '/api/v1/albums', 'get');
       }).toThrow('Missing query parameter: licenses in Method: "get" and Endpoint: "/api/v1/albums"');
     });
-
-    it.skip('should throw errors when reference type is not valid as an empty array', () => {
-      expect(() => {
-        validateQueryParam([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
-      }).toThrow('Error in request: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
-    });
   });
 });
 
-describe.skip('validateQueryParam method with custom Handler', () => {
+describe('validateQueryParam method with custom Handler', () => {
   const customErrorCallback = jest.fn();
   const { validateQueryParam } = validator(mock, {
     errorHandler: customErrorCallback,
@@ -91,10 +97,10 @@ describe.skip('validateQueryParam method with custom Handler', () => {
   describe('validate OpenAPI endpoint', () => {
     it('should throw errors when basic type is not valid', () => {
       try {
-        validateQueryParam(false, '/api/v1/name', 'post');
+        validateQueryParam(false, 'name', '/api/v1', 'get');
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in request: should be string. You provide "false"',
+          'Error in params: should be string. You provide "false"',
           [{
             dataPath: '', keyword: 'type', message: 'should be string', params: { type: 'string' }, schemaPath: '#/type',
           }],
@@ -102,27 +108,14 @@ describe.skip('validateQueryParam method with custom Handler', () => {
       }
     });
 
-    it('should throw errors when reference type is not valid', () => {
+    it('should throw errors when type is not an enum value', () => {
       try {
-        validateQueryParam(false, '/api/v1/albums', 'post');
+        validateQueryParam('test', 'name', '/api/v1', 'get');
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in request: should be array. You provide "false"',
+          'Error in params: should be equal to one of the allowed values: type1, type2. You provide "test"',
           [{
-            dataPath: '', keyword: 'type', message: 'should be array', params: { type: 'array' }, schemaPath: '#/type',
-          }],
-        );
-      }
-    });
-
-    it('should throw errors when reference type is not valid as an empty array', () => {
-      try {
-        validateQueryParam([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
-      } catch (err) {
-        expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in request: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"',
-          [{
-            dataPath: '/0', keyword: 'required', message: "should have required property 'title'", params: { missingProperty: 'title' }, schemaPath: 'defs.json#/definitions/components/schemas/Song/required',
+            dataPath: '', keyword: 'enum', message: 'should be equal to one of the allowed values', params: { allowedValues: ['type1', 'type2'] }, schemaPath: '#/enum',
           }],
         );
       }

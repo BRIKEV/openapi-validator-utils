@@ -5,8 +5,12 @@ const enumValues = allowedValues => (
   allowedValues ? `: ${allowedValues.join(', ')}` : ''
 );
 
+const arrayMessage = (message, schemaPath) => (
+  schemaPath.includes('items') ? `Array ${message} items` : message
+);
+
 const formatArrayError = errors => (
-  errors.map(({ message, params }) => `${message}${enumValues(params.allowedValues)}`)
+  errors.map(({ message, params, schemaPath }) => `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}`)
     .join(', ')
 );
 
