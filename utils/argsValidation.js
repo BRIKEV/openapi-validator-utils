@@ -4,7 +4,7 @@ const responseBuilder = (valid, errorMessage = '') => ({
 });
 
 const argsValidation = (value, endpoint, method, key) => {
-  if (!value) {
+  if (value === undefined) {
     return responseBuilder(false, `Value: "${value}" is required`);
   }
   if (!endpoint) {

@@ -1,23 +1,48 @@
 const validator = require('../..');
 const mock = require('./mock.json');
 
+/**
+ * All the endpoints we are using, you can find them in the fake-server.js file
+ * And the OpenAPI JSON in the mock.json
+ */
+
 describe('ValidateRequest method', () => {
   const { validateRequest } = validator(mock);
-  it('validate when "value" is not send', () => {
-    expect(() => {
-      validateRequest();
-    }).toThrow('Value: "undefined" is required');
+  describe('validate method args', () => {
+    it('validate when "value" is not send', () => {
+      expect(() => {
+        validateRequest();
+      }).toThrow('Value: "undefined" is required');
+    });
+
+    it('validate when "endpoint" is not send', () => {
+      expect(() => {
+        validateRequest('value');
+      }).toThrow('Endpoint: "undefined" is required');
+    });
+
+    it('validate when "method" is not send', () => {
+      expect(() => {
+        validateRequest('value', 'endpoint');
+      }).toThrow('Method: "undefined" is not valid');
+    });
   });
 
-  it('validate when "endpoint" is not send', () => {
-    expect(() => {
-      validateRequest('value');
-    }).toThrow('Endpoint: "undefined" is required');
-  });
+  describe('validate OpenAPI endpoint', () => {
+    it('should validate basic string type', () => {
+      const result = validateRequest('valid string', '/api/v1/name', 'post');
+      expect(result).toBeTruthy();
+    });
 
-  it('validate when "method" is not send', () => {
-    expect(() => {
-      validateRequest('value', 'endpoint');
-    }).toThrow('Method: "undefined" is not valid');
+    it('should validate object type with reference', () => {
+      const result = validateRequest({ title: 'example' }, '/api/v1/songs', 'post');
+      expect(result).toBeTruthy();
+    });
+
+    it.only('should throw errors when basic type is not valid', () => {
+      expect(() => {
+        validateRequest(false, '/api/v1/name', 'post');
+      }).toThrow('Error in request: should be string. You provide "false"');
+    });
   });
 });

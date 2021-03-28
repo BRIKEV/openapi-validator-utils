@@ -9,7 +9,7 @@ function InputValidationError(message, type, extra) {
 }
 util.inherits(InputValidationError, Error);
 
-const errorMethod = (type, handler) => (message, extra) => {
+const errorMethod = type => (message, handler, extra) => {
   if (handler) {
     return handler(message, extra);
   }
@@ -17,6 +17,7 @@ const errorMethod = (type, handler) => (message, extra) => {
   throw error;
 };
 
-const basicError = errorMethod('basic');
+const configuration = errorMethod('arguments');
+const request = errorMethod('request');
 
-module.exports = { basicError };
+module.exports = { configuration, request };
