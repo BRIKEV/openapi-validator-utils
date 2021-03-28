@@ -70,15 +70,11 @@ const validate = (swaggerObject, options = {}) => {
       throw errors.configuration(argsErrorMessage, errorHandler);
     }
     const {
-      valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.params(swaggerObject, endpoint, method);
+      valid: validEndpoint, errorMessage: endpointErrorMessage, parameter,
+    } = endpointValidation.params(swaggerObject, endpoint, method, key, type);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
-    const parameter = swaggerObject.paths[endpoint][method].parameters
-      .filter(({ in: paramType }) => paramType === type)
-      .find(({ name }) => name === key);
-    if (!parameter) return console.log('Missing parameter');
     let parametersSchema = parameter.schema;
     parametersSchema = formatReferences(parametersSchema);
     return schemaValidation(value, parametersSchema, 'params');

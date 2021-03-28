@@ -69,6 +69,12 @@ describe('validateQueryParam method', () => {
       }).toThrow('Error in params: should be string. You provide "1234"');
     });
 
+    it('should throw errors when reference key is not found', () => {
+      expect(() => {
+        validateQueryParam('MIT', 'licenses', '/api/v1/albums', 'get');
+      }).toThrow('Missing query parameter: licenses in Method: "get" and Endpoint: "/api/v1/albums"');
+    });
+
     it.skip('should throw errors when reference type is not valid as an empty array', () => {
       expect(() => {
         validateQueryParam([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');

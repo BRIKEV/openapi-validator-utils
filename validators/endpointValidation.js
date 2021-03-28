@@ -30,7 +30,7 @@ const request = (definition, endpoint, method, contentType) => {
   return responseBuilder(true);
 };
 
-const params = (definition, endpoint, method) => {
+const params = (definition, endpoint, method, key, type) => {
   const commonValidation = common(definition, endpoint, method);
   if (!commonValidation.valid) {
     return commonValidation;
@@ -38,7 +38,19 @@ const params = (definition, endpoint, method) => {
   if (!definition.paths[endpoint][method].parameters) {
     return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have params definition`);
   }
-  return responseBuilder(true);
+  const parameter = definition.paths[endpoint][method].parameters
+    .filter(({ in: paramType }) => paramType === type)
+    .find(({ name }) => name === key);
+  if (!parameter) {
+    return responseBuilder(
+      false,
+      `Missing ${type} parameter: ${key} in Method: "${method}" and Endpoint: "${endpoint}" `,
+    );
+  }
+  return {
+    ...responseBuilder(true),
+    parameter,
+  };
 };
 
 module.exports = { request, params };
