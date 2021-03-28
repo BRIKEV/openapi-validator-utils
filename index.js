@@ -63,6 +63,12 @@ const validate = (swaggerObject, options = {}) => {
   };
 
   const validateParam = type => (value, key, endpoint, method) => {
+    const {
+      valid: validArgs, errorMessage: argsErrorMessage,
+    } = argsValidation(value, endpoint, method, key);
+    if (!validArgs) {
+      throw errors.configuration(argsErrorMessage, errorHandler);
+    }
     const parameter = swaggerObject.paths[endpoint][method].parameters
       .filter(({ in: paramType }) => paramType === type)
       .find(({ name }) => name === key);
