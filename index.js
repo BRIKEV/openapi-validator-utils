@@ -1,13 +1,13 @@
 const Ajv = require('ajv').default;
 const {
-  ajvErrors,
   formatReferences,
   recursiveOmit,
-  inputValidation,
   optionsValidation,
-  argsValidation,
   errors,
 } = require('./utils');
+const {
+  argsValidation, ajvErrors, inputValidation, endpointValidation,
+} = require('./validators');
 
 const validate = (swaggerObject, options = {}) => {
   const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
@@ -45,6 +45,12 @@ const validate = (swaggerObject, options = {}) => {
     } = argsValidation(value, endpoint, method);
     if (!validArgs) {
       throw errors.configuration(argsErrorMessage, errorHandler);
+    }
+    const {
+      valid: validEndpoint, errorMessage: endpointErrorMessage,
+    } = endpointValidation.request(swaggerObject, endpoint, method, contentType);
+    if (!validEndpoint) {
+      throw errors.configuration(endpointErrorMessage, errorHandler);
     }
     let requestBodySchema = {
       ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema,

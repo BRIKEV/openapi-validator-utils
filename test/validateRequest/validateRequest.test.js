@@ -28,6 +28,24 @@ describe('ValidateRequest method', () => {
   });
 
   describe('validate OpenAPI endpoint', () => {
+    it('should throw errors when endpoint does not exist', () => {
+      expect(() => {
+        validateRequest(false, '/api/v1/non-valid-endpoint', 'post');
+      }).toThrow('Endpoint: "/api/v1/non-valid-endpoint" not found in the OpenAPI definition');
+    });
+
+    it('should throw errors when endpoint\'s method does not exist', () => {
+      expect(() => {
+        validateRequest(false, '/api/v1/name', 'get');
+      }).toThrow('Method: "get" not found in the OpenAPI definition for "/api/v1/name" endpoint');
+    });
+
+    it('should throw errors when endpoint\'s content-type does not exist', () => {
+      expect(() => {
+        validateRequest(false, '/api/v1/name', 'post', 'html');
+      }).toThrow('Method: "post" and Endpoint: "/api/v1/name" does not have requestBody with this ContentType: "html"');
+    });
+
     it('should validate basic string type', () => {
       const result = validateRequest('valid string', '/api/v1/name', 'post');
       expect(result).toBeTruthy();

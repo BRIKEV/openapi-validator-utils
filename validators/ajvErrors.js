@@ -1,5 +1,5 @@
 const isObject = require('lodash/isObject');
-const errorMethod = require('./errorMethod');
+const errorMethod = require('../utils/errorMethod');
 
 const formatArrayError = errors => errors.map(({ message }) => message).join(', ');
 
