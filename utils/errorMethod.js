@@ -20,5 +20,6 @@ const errorMethod = type => (message, handler, extra) => {
 
 const configuration = errorMethod('arguments');
 const request = errorMethod('request');
+const params = errorMethod('request');
 
-module.exports = { configuration, request };
+module.exports = { configuration, request, params };
