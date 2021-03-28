@@ -57,7 +57,13 @@ describe('validateQueryParam method', () => {
       }).toThrow('Error in params: should be string. You provide "false"');
     });
 
-    it.only('should throw errors when reference type is not valid', () => {
+    it('should throw errors when basic type is not a valid value of the enum list', () => {
+      expect(() => {
+        validateQueryParam('test', 'name', '/api/v1', 'get');
+      }).toThrow('Error in params: should be equal to one of the allowed values: type1, type2. You provide "test"');
+    });
+
+    it('should throw errors when reference type is not valid', () => {
       expect(() => {
         validateQueryParam(1234, 'license', '/api/v1/albums', 'get');
       }).toThrow('Error in params: should be string. You provide "1234"');
