@@ -11,7 +11,7 @@ util.inherits(InputValidationError, Error);
 
 const errorMethod = type => (message, handler, extra) => {
   if (handler) {
-    return handler(message, extra);
+    throw handler(message, extra);
   }
   const error = new InputValidationError(message, type, extra);
   throw error;

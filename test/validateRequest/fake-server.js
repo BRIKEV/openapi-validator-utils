@@ -20,7 +20,9 @@ const instance = expressJSDocSwagger(app)(options);
 instance.on('finish', data => {
   const dataStringified = JSON.stringify(data, null, 2);
   fs.writeFile('mock.json', dataStringified, err => {
+    // eslint-disable-next-line
     if (err) return console.error(`Error generating mocks ${err}`);
+    // eslint-disable-next-line
     return console.log('Save mock');
   });
 });

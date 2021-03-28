@@ -5,7 +5,6 @@ const mock = require('./mock.json');
  * All the endpoints we are using, you can find them in the fake-server.js file
  * And the OpenAPI JSON in the mock.json
  */
-
 describe('ValidateRequest method', () => {
   const { validateRequest } = validator(mock);
   describe('validate method args', () => {
@@ -55,6 +54,53 @@ describe('ValidateRequest method', () => {
       expect(() => {
         validateRequest([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
       }).toThrow('Error in request: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
+    });
+  });
+});
+
+describe('ValidateRequest method with custom Handler', () => {
+  const customErrorCallback = jest.fn();
+  const { validateRequest } = validator(mock, {
+    errorHandler: customErrorCallback,
+  });
+  describe('validate OpenAPI endpoint', () => {
+    it('should throw errors when basic type is not valid', () => {
+      try {
+        validateRequest(false, '/api/v1/name', 'post');
+      } catch (err) {
+        expect(customErrorCallback).toHaveBeenCalledWith(
+          'Error in request: should be string. You provide "false"',
+          [{
+            dataPath: '', keyword: 'type', message: 'should be string', params: { type: 'string' }, schemaPath: '#/type',
+          }],
+        );
+      }
+    });
+
+    it('should throw errors when reference type is not valid', () => {
+      try {
+        validateRequest(false, '/api/v1/albums', 'post');
+      } catch (err) {
+        expect(customErrorCallback).toHaveBeenCalledWith(
+          'Error in request: should be array. You provide "false"',
+          [{
+            dataPath: '', keyword: 'type', message: 'should be array', params: { type: 'array' }, schemaPath: '#/type',
+          }],
+        );
+      }
+    });
+
+    it('should throw errors when reference type is not valid as an empty array', () => {
+      try {
+        validateRequest([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
+      } catch (err) {
+        expect(customErrorCallback).toHaveBeenCalledWith(
+          'Error in request: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"',
+          [{
+            dataPath: '/0', keyword: 'required', message: "should have required property 'title'", params: { missingProperty: 'title' }, schemaPath: 'defs.json#/definitions/components/schemas/Song/required',
+          }],
+        );
+      }
     });
   });
 });
