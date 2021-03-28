@@ -1,0 +1,151 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Albums store",
+    "description": "Add your description",
+    "license": {
+      "name": "MIT",
+      "url": ""
+    },
+    "termsOfService": "",
+    "version": "1.0.0"
+  },
+  "servers": [],
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name param description",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "type1",
+                "type2"
+              ]
+            }
+          }
+        ],
+        "tags": []
+      }
+    },
+    "/api/v1/albums": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name param description",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "type1",
+                "type2"
+              ]
+            }
+          },
+          {
+            "name": "license",
+            "in": "query",
+            "description": "name param description",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MIT",
+                "ISC"
+              ]
+            }
+          }
+        ],
+        "tags": []
+      }
+    },
+    "/api/v1/albums/{id}": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name param description",
+            "required": true,
+            "deprecated": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "tags": []
+      }
+    }
+  },
+  "tags": []
+}
