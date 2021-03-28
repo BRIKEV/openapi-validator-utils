@@ -2,11 +2,14 @@ const Ajv = require('ajv').default;
 const {
   formatReferences,
   recursiveOmit,
-  optionsValidation,
   errors,
 } = require('./utils');
 const {
-  argsValidation, ajvErrors, inputValidation, endpointValidation,
+  argsValidation,
+  ajvErrors,
+  inputValidation,
+  endpointValidation,
+  optionsValidation,
 } = require('./validators');
 
 const validate = (swaggerObject, options = {}) => {
