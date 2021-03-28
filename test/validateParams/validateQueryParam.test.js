@@ -75,7 +75,7 @@ describe('validateQueryParam method', () => {
       }).toThrow('Error in params: should be string. You provide "1234"');
     });
 
-    it('should throw errors when multiple query params are not valid', () => {
+    it('should throw errors with array invalid type', () => {
       expect(() => {
         validateQueryParam([1], 'name', '/api/v1/albums/{id}', 'get');
       }).toThrow('Error in params: Array should be string items. You provide "[1]"');
