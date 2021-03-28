@@ -39,10 +39,22 @@ describe('ValidateRequest method', () => {
       expect(result).toBeTruthy();
     });
 
-    it.only('should throw errors when basic type is not valid', () => {
+    it('should throw errors when basic type is not valid', () => {
       expect(() => {
         validateRequest(false, '/api/v1/name', 'post');
       }).toThrow('Error in request: should be string. You provide "false"');
+    });
+
+    it('should throw errors when reference type is not valid', () => {
+      expect(() => {
+        validateRequest(false, '/api/v1/albums', 'post');
+      }).toThrow('Error in request: should be array. You provide "false"');
+    });
+
+    it('should throw errors when reference type is not valid as an empty array', () => {
+      expect(() => {
+        validateRequest([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
+      }).toThrow('Error in request: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
     });
   });
 });
