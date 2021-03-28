@@ -1,3 +1,4 @@
+const { isFunction } = require('lodash');
 const util = require('util');
 
 function InputValidationError(message, type, extra) {
@@ -9,14 +10,15 @@ function InputValidationError(message, type, extra) {
 }
 util.inherits(InputValidationError, Error);
 
-const errorMethod = (type, handler) => (message, extra) => {
-  if (handler) {
-    return handler(message, extra);
+const errorMethod = type => (message, handler, extra) => {
+  if (handler && isFunction(handler)) {
+    throw handler(message, extra);
   }
   const error = new InputValidationError(message, type, extra);
   throw error;
 };
 
-const basicError = errorMethod('basic');
+const configuration = errorMethod('arguments');
+const request = errorMethod('request');
 
-module.exports = { basicError };
+module.exports = { configuration, request };
