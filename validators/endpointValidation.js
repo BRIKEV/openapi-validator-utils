@@ -53,4 +53,24 @@ const params = (definition, endpoint, method, key, type) => {
   };
 };
 
-module.exports = { request, params };
+const response = (definition, endpoint, method, status, contentType) => {
+  const commonValidation = common(definition, endpoint, method);
+  if (!commonValidation.valid) {
+    return commonValidation;
+  }
+  if (!definition.paths[endpoint][method].responses) {
+    return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have responses definition`);
+  }
+  if (!definition.paths[endpoint][method].responses[status]) {
+    return responseBuilder(false, `Status: "${status}" not found in the OpenAPI definition for Method: "${method}" and Endpoint: "${endpoint}"`);
+  }
+  if (!definition.paths[endpoint][method].responses[status].content[contentType]) {
+    return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have responses with this ContentType: "${contentType}"`);
+  }
+  if (!definition.paths[endpoint][method].responses[status].content[contentType].schema) {
+    return responseBuilder(false, `Schema not found for Method: "${method}" Endpoint: "${endpoint}" with ContentType: "${contentType}" requestBody`);
+  }
+  return responseBuilder(true);
+};
+
+module.exports = { request, params, response };

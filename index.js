@@ -10,6 +10,7 @@ const {
   inputValidation,
   endpointValidation,
   optionsValidation,
+  responseArgsValidation,
 } = require('./validators');
 
 const validate = (swaggerObject, options = {}) => {
@@ -40,6 +41,26 @@ const validate = (swaggerObject, options = {}) => {
     const valid = validateSchema(value);
     if (!valid) return ajvErrors(validateSchema.errors, value, type, errorHandler);
     return true;
+  };
+
+  const validateResponse = (value, endpoint, method, status, contentType = 'application/json') => {
+    const {
+      valid: validArgs, errorMessage: argsErrorMessage,
+    } = responseArgsValidation(value, endpoint, method, status);
+    if (!validArgs) {
+      throw errors.configuration(argsErrorMessage, errorHandler);
+    }
+    const {
+      valid: validEndpoint, errorMessage: endpointErrorMessage,
+    } = endpointValidation.response(swaggerObject, endpoint, method, status, contentType);
+    if (!validEndpoint) {
+      throw errors.configuration(endpointErrorMessage, errorHandler);
+    }
+    let requestBodySchema = {
+      ...swaggerObject.paths[endpoint][method].responses[status].content[contentType].schema,
+    };
+    requestBodySchema = formatReferences(requestBodySchema);
+    return schemaValidation(value, requestBodySchema, 'response');
   };
 
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
@@ -85,6 +106,7 @@ const validate = (swaggerObject, options = {}) => {
     validateQueryParam: validateParam('query'),
     validatePathParam: validateParam('path'),
     validateHeaderParam: validateParam('header'),
+    validateResponse,
   };
 };
 

@@ -3,6 +3,7 @@ const inputValidation = require('./inputValidation');
 const argsValidation = require('./argsValidation');
 const endpointValidation = require('./endpointValidation');
 const optionsValidation = require('./optionsValidation');
+const responseArgsValidation = require('./responseArgsValidation');
 
 module.exports = {
   ajvErrors,
@@ -10,4 +11,5 @@ module.exports = {
   inputValidation,
   endpointValidation,
   optionsValidation,
+  responseArgsValidation,
 };
