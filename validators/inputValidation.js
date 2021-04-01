@@ -1,9 +1,5 @@
 const { isPlainObject, isEmpty } = require('lodash');
-
-const responseBuilder = (valid, errorMessage = '') => ({
-  valid,
-  errorMessage,
-});
+const { responseBuilder } = require('../utils');
 
 const inputValidation = swaggerInput => {
   if (!isPlainObject(swaggerInput)) {

@@ -1,9 +1,5 @@
 const { isPlainObject, isFunction } = require('lodash');
-
-const responseBuilder = (valid, errorMessage = '') => ({
-  valid,
-  errorMessage,
-});
+const { responseBuilder } = require('../utils');
 
 const validOptions = ['ajvConfig', 'errorHandler'];
 

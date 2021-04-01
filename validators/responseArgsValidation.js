@@ -1,9 +1,5 @@
 const commonArgsValidation = require('./argsValidation');
-
-const responseBuilder = (valid, errorMessage = '') => ({
-  valid,
-  errorMessage,
-});
+const { responseBuilder } = require('../utils');
 
 const argsValidation = (value, endpoint, method, status) => {
   const commonValidation = commonArgsValidation(value, endpoint, method);
