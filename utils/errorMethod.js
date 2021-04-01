@@ -20,6 +20,12 @@ const errorMethod = type => (message, handler, extra) => {
 
 const configuration = errorMethod('arguments');
 const request = errorMethod('request');
-const params = errorMethod('request');
+const params = errorMethod('params');
+const response = errorMethod('response');
 
-module.exports = { configuration, request, params };
+module.exports = {
+  configuration,
+  request,
+  params,
+  response,
+};
