@@ -1,7 +1,4 @@
-const responseBuilder = (valid, errorMessage = '') => ({
-  valid,
-  errorMessage,
-});
+const { responseBuilder } = require('../utils');
 
 const common = (definition, endpoint, method) => {
   if (!definition.paths[endpoint]) {

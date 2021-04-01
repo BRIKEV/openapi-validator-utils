@@ -1,7 +1,4 @@
-const responseBuilder = (valid, errorMessage = '') => ({
-  valid,
-  errorMessage,
-});
+const { responseBuilder } = require('../utils');
 
 const argsValidation = (value, endpoint, method, key) => {
   if (value === undefined) {
