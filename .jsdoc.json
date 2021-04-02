@@ -1,6 +1,7 @@
 {
   "opts": {
-    "destination": "./docs"
+    "destination": "./docs",
+    "template": "node_modules/better-docs"
   },
   "source": {
     "includePattern": ".+\\.js(doc|x)?$",
