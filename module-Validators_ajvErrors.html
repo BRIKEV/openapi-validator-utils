@@ -1,25 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Module: Validators/ajvErrors</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Validators/ajvErrors</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
 </head>
 
-<body>
 
-<div id="main">
 
-    <h1 class="page-title">Module: Validators/ajvErrors</h1>
-
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
     
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Utils_formatReferences.html">Utils/formatReferences</a></li><li><a href="module-Utils_formatSchemaMessage.html">Utils/formatSchemaMessage</a></li><li><a href="module-Utils_recursiveOmit.html">Utils/recursiveOmit</a></li><li><a href="module-Utils_responseBuilder.html">Utils/responseBuilder</a></li><li><a href="module-Validators_ajvErrors.html">Validators/ajvErrors</a></li><li><a href="module-Validators_argsValidation.html">Validators/argsValidation</a></li><li><a href="module-Validators_endpointValidation.html">Validators/endpointValidation</a></li><li><a href="module-Validators_inputValidation.html">Validators/inputValidation</a></li><li><a href="module-Validators_optionsValidation.html">Validators/optionsValidation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#validate">validate</a></li><li><a href="global.html#ValidateParams">ValidateParams</a></li><li><a href="global.html#ValidateRequest">ValidateRequest</a></li><li><a href="global.html#ValidateResponse">ValidateResponse</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Module</p>
+                    <h1>Validators/ajvErrors</h1>
+                </header>
+                
 
 
 
@@ -40,7 +97,7 @@
         
     
     </div>
-
+    
     
 
     
@@ -56,24 +113,35 @@
     
 
     
-        <h3 class="subsection-title">Methods</h3>
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
 
+
+    
+    <h4 class="name" id="~ajvErrors">
+        <a class="href-link" href="#~ajvErrors">#</a>
         
             
-
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                ajvErrors<span class="signature">(ajvError, value, type, handler)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
     
 
     
-    <h4 class="name" id="~ajvErrors"><span class="type-signature">(inner) </span>ajvErrors<span class="signature">(ajvError, value, type, handler)</span><span class="type-signature"></span></h4>
     
-
+    <div class="description">
+        This methods formats Ajv errors after validation
+    </div>
     
-
-
-
-<div class="description">
-    This methods formats Ajv errors after validation
-</div>
 
 
 
@@ -85,58 +153,61 @@
 
     <h5>Parameters:</h5>
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>ajvError</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>ajvError</code></td>
+  
+
+  <td class="type">
+  
+      
 <span class="param-type">Array.&lt;object></span>
 
 
-            
-            </td>
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Errors after validation</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-            
-
-            <td class="description last">Errors after validation</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
+  <td class="type">
+  
+      
 <span class="param-type">numeric</span>
 |
 
@@ -146,66 +217,71 @@
 <span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Any type value you try to validate</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>type</code></td>
+  
 
-            
-
-            <td class="description last">Any type value you try to validate</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>type</code></td>
-            
-
-            <td class="type">
-            
-                
+  <td class="type">
+  
+      
 <span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Type of validation, params, response or request</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>handler</code></td>
+  
 
-            
-
-            <td class="description last">Type of validation, params, response or request</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>handler</code></td>
-            
-
-            <td class="type">
-            
-                
+  <td class="type">
+  
+      
 <span class="param-type">ErrorHandler</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">function to extend default behavior</td>
-        </tr>
+  <td class="description last">function to extend default behavior</td>
+</tr>
 
-    
-    </tbody>
-</table>
 
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -236,7 +312,6 @@
     
 
     
-
     
 
     
@@ -265,22 +340,34 @@
 
 
 
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~arrayMessage">
+        <a class="href-link" href="#~arrayMessage">#</a>
         
             
-
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                arrayMessage<span class="signature">(message, schemaPath)</span><span class="type-signature"> &rarr; {string}</span>
+            
+        </span>
+    </h4>
     
 
     
-    <h4 class="name" id="~arrayMessage"><span class="type-signature">(inner) </span>arrayMessage<span class="signature">(message, schemaPath)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
-
+    <div class="description">
+        This method formats the message when schemaPath is an array
+    </div>
     
-
-
-
-<div class="description">
-    This method formats the message when schemaPath is an array
-</div>
 
 
 
@@ -292,75 +379,79 @@
 
     <h5>Parameters:</h5>
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>message</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>message</code></td>
+  
+
+  <td class="type">
+  
+      
 <span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">message to include when we receive an array</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>schemaPath</code></td>
+  
 
-            
-
-            <td class="description last">message to include when we receive an array</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>schemaPath</code></td>
-            
-
-            <td class="type">
-            
-                
+  <td class="type">
+  
+      
 <span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">path to determine if it is an array</td>
-        </tr>
+  <td class="description last">path to determine if it is an array</td>
+</tr>
 
-    
-    </tbody>
-</table>
 
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -391,7 +482,6 @@
     
 
     
-
     
 
     
@@ -415,49 +505,64 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    value formatted
-</div>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>value formatted</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
 <span class="param-type">string</span>
 
 
-    </dd>
-</dl>
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
 
     
-
-
-
-
-
+    <h4 class="name" id="~enumValues">
+        <a class="href-link" href="#~enumValues">#</a>
         
             
-
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                enumValues<span class="signature">(allowedValues)</span><span class="type-signature"> &rarr; {string}</span>
+            
+        </span>
+    </h4>
     
 
     
-    <h4 class="name" id="~enumValues"><span class="type-signature">(inner) </span>enumValues<span class="signature">(allowedValues)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
-
+    <div class="description">
+        This method formats the text when receives enum values
+    </div>
     
-
-
-
-<div class="description">
-    This method formats the text when receives enum values
-</div>
 
 
 
@@ -469,52 +574,54 @@
 
     <h5>Parameters:</h5>
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>allowedValues</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>allowedValues</code></td>
+  
+
+  <td class="type">
+  
+      
 <span class="param-type">Array.&lt;string></span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">allowed values from an enum description</td>
-        </tr>
+  <td class="description last">allowed values from an enum description</td>
+</tr>
 
-    
-    </tbody>
-</table>
 
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -545,7 +652,6 @@
     
 
     
-
     
 
     
@@ -569,49 +675,64 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    value formatted
-</div>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>value formatted</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
 <span class="param-type">string</span>
 
 
-    </dd>
-</dl>
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
 
     
-
-
-
-
-
+    <h4 class="name" id="~ErrorHandler">
+        <a class="href-link" href="#~ErrorHandler">#</a>
         
             
-
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                ErrorHandler<span class="signature">(message, extra)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
     
 
     
-    <h4 class="name" id="~ErrorHandler"><span class="type-signature">(inner) </span>ErrorHandler<span class="signature">(message, extra)</span><span class="type-signature"></span></h4>
     
-
+    <div class="description">
+        Description of the function
+    </div>
     
-
-
-
-<div class="description">
-    Description of the function
-</div>
 
 
 
@@ -623,75 +744,79 @@
 
     <h5>Parameters:</h5>
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>message</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>message</code></td>
+  
+
+  <td class="type">
+  
+      
 <span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Error message</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>extra</code></td>
+  
 
-            
-
-            <td class="description last">Error message</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extra</code></td>
-            
-
-            <td class="type">
-            
-                
+  <td class="type">
+  
+      
 <span class="param-type">object</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">Ajv or extra error info</td>
-        </tr>
+  <td class="description last">Ajv or extra error info</td>
+</tr>
 
-    
-    </tbody>
-</table>
 
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -722,7 +847,6 @@
     
 
     
-
     
 
     
@@ -751,22 +875,34 @@
 
 
 
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~formatArrayError">
+        <a class="href-link" href="#~formatArrayError">#</a>
         
             
-
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                formatArrayError<span class="signature">(errors)</span><span class="type-signature"> &rarr; {string}</span>
+            
+        </span>
+    </h4>
     
 
     
-    <h4 class="name" id="~formatArrayError"><span class="type-signature">(inner) </span>formatArrayError<span class="signature">(errors)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
-
+    <div class="description">
+        This methods format the AJV error
+    </div>
     
-
-
-
-<div class="description">
-    This methods format the AJV error
-</div>
 
 
 
@@ -778,52 +914,54 @@
 
     <h5>Parameters:</h5>
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>errors</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>errors</code></td>
+  
+
+  <td class="type">
+  
+      
 <span class="param-type">Array.&lt;object></span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">Ajv errors</td>
-        </tr>
+  <td class="description last">Ajv errors</td>
+</tr>
 
-    
-    </tbody>
-</table>
 
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -854,7 +992,6 @@
     
 
     
-
     
 
     
@@ -878,34 +1015,41 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Error message
-</div>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Error message</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
 <span class="param-type">string</span>
 
 
-    </dd>
-</dl>
-
+    </div>
     
+</div>
+
+                
+        </div>
+    </div>
 
 
 
 
-
-        
+</div>
+            
+            </div>
+        </div>
     
 
     
@@ -918,19 +1062,25 @@
 
 
 
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Utils_formatReferences.html">Utils/formatReferences</a></li><li><a href="module-Utils_formatSchemaMessage.html">Utils/formatSchemaMessage</a></li><li><a href="module-Utils_recursiveOmit.html">Utils/recursiveOmit</a></li><li><a href="module-Utils_responseBuilder.html">Utils/responseBuilder</a></li><li><a href="module-Validators_ajvErrors.html">Validators/ajvErrors</a></li><li><a href="module-Validators_argsValidation.html">Validators/argsValidation</a></li><li><a href="module-Validators_endpointValidation.html">Validators/endpointValidation</a></li><li><a href="module-Validators_inputValidation.html">Validators/inputValidation</a></li><li><a href="module-Validators_optionsValidation.html">Validators/optionsValidation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#validate">validate</a></li><li><a href="global.html#ValidateParams">ValidateParams</a></li><li><a href="global.html#ValidateRequest">ValidateRequest</a></li><li><a href="global.html#ValidateResponse">ValidateResponse</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Apr 02 2021 19:30:26 GMT+0200 (Central European Summer Time)
-</footer>
-
-<script> prettyPrint(); </script>
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
 <script src="scripts/linenumber.js"> </script>
+
 </body>
 </html>
