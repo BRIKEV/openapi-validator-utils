@@ -1,6 +1,6 @@
 const { cloneDeep, isPlainObject } = require('lodash');
 
-/** @module Utils */
+/** @module Utils/formatReferences */
 
 /**
  * This function removes the default $ref from the OpenAPI key

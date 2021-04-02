@@ -1,4 +1,4 @@
-/** @module Utils */
+/** @module Utils/responseBuilder */
 
 /**
  * This methods creates a common payload for the "validators"

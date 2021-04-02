@@ -1,6 +1,6 @@
 const { cloneDeep, isPlainObject, omit } = require('lodash');
 
-/** @module Utils */
+/** @module Utils/recursiveOmit */
 
 /**
  * This method allows you to exclude some keys from an object recursively
