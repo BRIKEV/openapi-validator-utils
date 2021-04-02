@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": "jest",
-    "generate-docs": "node_modules/.bin/jsdoc . -R README.md -c .jsdoc.json",
+    "generate-docs": "./node_modules/.bin/jsdoc . -R README.md -c .jsdoc.json",
     "predeploy": "npm run generate-docs",
     "deploy": "./node_modules/.bin/gh-pages -d docs",
     "lint": "./node_modules/.bin/eslint ."
