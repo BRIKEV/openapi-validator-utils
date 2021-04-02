@@ -10,6 +10,10 @@
   "templates": {
     "default": {
       "outputSourceFiles": false
+    },
+    "better-docs": {
+      "title": "openapi-validator-utils",
+      "name": "openapi-validator-utils"
     }
   }
 }
