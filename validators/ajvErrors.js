@@ -39,7 +39,7 @@ const formatArrayError = errors => (
  * @function
  * @param {string} message Error message
  * @param {object} extra Ajv or extra error info
-*/
+ */
 
 /**
  * This methods formats Ajv errors after validation
