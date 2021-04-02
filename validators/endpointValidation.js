@@ -1,5 +1,14 @@
 const { responseBuilder } = require('../utils');
 
+/** @module Validators/endpointValidation */
+
+/**
+ * This method validates some common values
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @returns {BuilderResponse}
+ */
 const common = (definition, endpoint, method) => {
   if (!definition.paths[endpoint]) {
     return responseBuilder(false, `Endpoint: "${endpoint}" not found in the OpenAPI definition`);
@@ -10,6 +19,14 @@ const common = (definition, endpoint, method) => {
   return responseBuilder(true);
 };
 
+/**
+ * This method validates request info
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ * @returns {BuilderResponse}
+ */
 const request = (definition, endpoint, method, contentType) => {
   const commonValidation = common(definition, endpoint, method);
   if (!commonValidation.valid) {
@@ -27,6 +44,15 @@ const request = (definition, endpoint, method, contentType) => {
   return responseBuilder(true);
 };
 
+/**
+ * This method validates params info
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} key OpenApi key we want to validate
+ * @param {string} type OpenApi type we want to validate
+ * @returns {BuilderResponse}
+ */
 const params = (definition, endpoint, method, key, type) => {
   const commonValidation = common(definition, endpoint, method);
   if (!commonValidation.valid) {
@@ -50,6 +76,15 @@ const params = (definition, endpoint, method, key, type) => {
   };
 };
 
+/**
+ * This method validates responses info
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} status OpenApi status we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ * @returns {BuilderResponse}
+ */
 const response = (definition, endpoint, method, status, contentType) => {
   const commonValidation = common(definition, endpoint, method);
   if (!commonValidation.valid) {

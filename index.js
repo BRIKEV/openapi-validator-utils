@@ -13,8 +13,52 @@ const {
   responseArgsValidation,
 } = require('./validators');
 
-const validate = (swaggerObject, options = {}) => {
-  const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
+/**
+ * @name ValidateRequest
+ * @function
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ */
+
+/**
+ * @name ValidateParams
+ * @function
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ */
+
+/**
+ * @name ValidateResponse
+ * @function
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} status OpenApi status we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ */
+
+/**
+ * Validator methods
+ * @typedef {object} ValidatorMethods
+ * @property {ValidateRequest} validateRequest
+ * @property {ValidateParams} validateQueryParam
+ * @property {ValidateParams} validatePathParam
+ * @property {ValidateParams} validateHeaderParam
+ * @property {ValidateResponse} validateResponse
+ */
+
+/**
+ * Validate method
+ * @param {object} openApiDef OpenAPI definition
+ * @param {object} options Options to extend the errorHandler or Ajv configuration
+ * @returns {ValidatorMethods} validator methods
+ */
+const validate = (openApiDef, options = {}) => {
+  const { valid: inputParameterValid, errorMessage } = inputValidation(openApiDef);
   const errorHandler = options ? options.errorHandler : null;
   if (!inputParameterValid) {
     throw errors.configuration(errorMessage, errorHandler);
@@ -28,7 +72,7 @@ const validate = (swaggerObject, options = {}) => {
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
-      components: recursiveOmit(swaggerObject.components),
+      components: recursiveOmit(openApiDef.components),
     },
   };
   const ajv = new Ajv({
@@ -52,12 +96,12 @@ const validate = (swaggerObject, options = {}) => {
     }
     const {
       valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.response(swaggerObject, endpoint, method, status, contentType);
+    } = endpointValidation.response(openApiDef, endpoint, method, status, contentType);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
     let requestBodySchema = {
-      ...swaggerObject.paths[endpoint][method].responses[status].content[contentType].schema,
+      ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
     requestBodySchema = formatReferences(requestBodySchema);
     return schemaValidation(value, requestBodySchema, 'response');
@@ -72,12 +116,12 @@ const validate = (swaggerObject, options = {}) => {
     }
     const {
       valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.request(swaggerObject, endpoint, method, contentType);
+    } = endpointValidation.request(openApiDef, endpoint, method, contentType);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
     let requestBodySchema = {
-      ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema,
+      ...openApiDef.paths[endpoint][method].requestBody.content[contentType].schema,
     };
     requestBodySchema = formatReferences(requestBodySchema);
     return schemaValidation(value, requestBodySchema, 'request');
@@ -92,7 +136,7 @@ const validate = (swaggerObject, options = {}) => {
     }
     const {
       valid: validEndpoint, errorMessage: endpointErrorMessage, parameter,
-    } = endpointValidation.params(swaggerObject, endpoint, method, key, type);
+    } = endpointValidation.params(openApiDef, endpoint, method, key, type);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
