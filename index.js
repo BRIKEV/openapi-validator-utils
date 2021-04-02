@@ -13,8 +13,13 @@ const {
   responseArgsValidation,
 } = require('./validators');
 
-const validate = (swaggerObject, options = {}) => {
-  const { valid: inputParameterValid, errorMessage } = inputValidation(swaggerObject);
+/**
+ * Validate method
+ * @param {object} openApiDef OpenAPI definition
+ * @param {object} options Options to extend the errorHandler or Ajv configuration
+ */
+const validate = (openApiDef, options = {}) => {
+  const { valid: inputParameterValid, errorMessage } = inputValidation(openApiDef);
   const errorHandler = options ? options.errorHandler : null;
   if (!inputParameterValid) {
     throw errors.configuration(errorMessage, errorHandler);
@@ -28,7 +33,7 @@ const validate = (swaggerObject, options = {}) => {
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
-      components: recursiveOmit(swaggerObject.components),
+      components: recursiveOmit(openApiDef.components),
     },
   };
   const ajv = new Ajv({
@@ -52,12 +57,12 @@ const validate = (swaggerObject, options = {}) => {
     }
     const {
       valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.response(swaggerObject, endpoint, method, status, contentType);
+    } = endpointValidation.response(openApiDef, endpoint, method, status, contentType);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
     let requestBodySchema = {
-      ...swaggerObject.paths[endpoint][method].responses[status].content[contentType].schema,
+      ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
     requestBodySchema = formatReferences(requestBodySchema);
     return schemaValidation(value, requestBodySchema, 'response');
@@ -72,12 +77,12 @@ const validate = (swaggerObject, options = {}) => {
     }
     const {
       valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.request(swaggerObject, endpoint, method, contentType);
+    } = endpointValidation.request(openApiDef, endpoint, method, contentType);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
     let requestBodySchema = {
-      ...swaggerObject.paths[endpoint][method].requestBody.content[contentType].schema,
+      ...openApiDef.paths[endpoint][method].requestBody.content[contentType].schema,
     };
     requestBodySchema = formatReferences(requestBodySchema);
     return schemaValidation(value, requestBodySchema, 'request');
@@ -92,7 +97,7 @@ const validate = (swaggerObject, options = {}) => {
     }
     const {
       valid: validEndpoint, errorMessage: endpointErrorMessage, parameter,
-    } = endpointValidation.params(swaggerObject, endpoint, method, key, type);
+    } = endpointValidation.params(openApiDef, endpoint, method, key, type);
     if (!validEndpoint) {
       throw errors.configuration(endpointErrorMessage, errorHandler);
     }
