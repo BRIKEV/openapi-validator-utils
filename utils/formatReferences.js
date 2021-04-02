@@ -7,6 +7,7 @@ const { cloneDeep, isPlainObject } = require('lodash');
  * to use a valid one so the Ajv validator works
  * @param {string} key openapi object key
  * @param {string} value value to replace when the key is a $ref key
+ * @returns {object}
  */
 const formatRefKey = (key, value) => {
   if (key === '$ref') {
@@ -18,6 +19,7 @@ const formatRefKey = (key, value) => {
 /**
  * This method modifies all the references in the OpenAPI code
  * @param {object} OpenAPI definition to format
+ * @returns {object}
  */
 const formatReferences = payload => {
   const newObject = cloneDeep(payload);

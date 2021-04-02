@@ -6,6 +6,7 @@ const { responseBuilder } = require('../utils');
 /**
  * This method validates we send a valid OpenAPI definition
  * @param {object} openAPIDef OpenApi definition
+ * @returns {BuilderResponse}
  */
 const inputValidation = openAPIDef => {
   if (!isPlainObject(openAPIDef)) {

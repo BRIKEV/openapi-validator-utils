@@ -9,6 +9,7 @@ const { responseBuilder } = require('../utils');
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
  * @param {number} status OpenApi status we want to validate
+ * @returns {BuilderResponse}
  */
 const argsValidation = (value, endpoint, method, status) => {
   const commonValidation = commonArgsValidation(value, endpoint, method);

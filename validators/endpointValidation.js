@@ -7,6 +7,7 @@ const { responseBuilder } = require('../utils');
  * @param {object} definition OpenApi definition
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
+ * @returns {BuilderResponse}
  */
 const common = (definition, endpoint, method) => {
   if (!definition.paths[endpoint]) {
@@ -24,6 +25,7 @@ const common = (definition, endpoint, method) => {
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
  * @param {string} contentType Content api of the request we want to validate
+ * @returns {BuilderResponse}
  */
 const request = (definition, endpoint, method, contentType) => {
   const commonValidation = common(definition, endpoint, method);
@@ -49,6 +51,7 @@ const request = (definition, endpoint, method, contentType) => {
  * @param {string} method OpenApi method we want to validate
  * @param {string} key OpenApi key we want to validate
  * @param {string} type OpenApi type we want to validate
+ * @returns {BuilderResponse}
  */
 const params = (definition, endpoint, method, key, type) => {
   const commonValidation = common(definition, endpoint, method);
@@ -80,6 +83,7 @@ const params = (definition, endpoint, method, key, type) => {
  * @param {string} method OpenApi method we want to validate
  * @param {string} status OpenApi status we want to validate
  * @param {string} contentType Content api of the request we want to validate
+ * @returns {BuilderResponse}
  */
 const response = (definition, endpoint, method, status, contentType) => {
   const commonValidation = common(definition, endpoint, method);

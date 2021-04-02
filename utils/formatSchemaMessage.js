@@ -5,6 +5,7 @@
  * @param {string} message schema path message
  * @example
  *  defs.json#/definitions/components/schemas/Song/required
+ * @returns {string}
  */
 const formatSchemaMessage = message => {
   const [, schema] = message.split('/schemas/');

@@ -9,6 +9,7 @@ const { responseBuilder } = require('../utils');
  * @param {string} method OpenApi method we want to validate
  * @param {string} key OpenApi key we want to validate in case we want to
  * validate headers, params or query params
+ * @returns {BuilderResponse}
  */
 const argsValidation = (value, endpoint, method, key) => {
   if (value === undefined) {
