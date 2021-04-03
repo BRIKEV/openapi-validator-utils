@@ -53,9 +53,6 @@ const request = (definition, endpoint, method, contentType) => {
   if (!definition.paths[endpoint][method].requestBody.content[contentType]) {
     return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have requestBody with this ContentType: "${contentType}"`);
   }
-  if (!definition.paths[endpoint][method].requestBody.content[contentType].schema) {
-    return responseBuilder(false, `Schema not found for Method: "${method}" Endpoint: "${endpoint}" with ContentType: "${contentType}" requestBody`);
-  }
   return schemaValidation(
     definition.paths[endpoint][method].requestBody.content[contentType].schema,
     method,
