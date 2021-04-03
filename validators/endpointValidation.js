@@ -7,14 +7,18 @@ const { responseBuilder } = require('../utils');
  * @param {object} definition OpenApi definition
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
+ * @param {string} type OpenAPI type [requestBody, responses, parameters]
  * @returns {BuilderResponse}
  */
-const common = (definition, endpoint, method) => {
+const common = (definition, endpoint, method, type) => {
   if (!definition.paths[endpoint]) {
     return responseBuilder(false, `Endpoint: "${endpoint}" not found in the OpenAPI definition`);
   }
   if (!definition.paths[endpoint][method]) {
     return responseBuilder(false, `Method: "${method}" not found in the OpenAPI definition for "${endpoint}" endpoint`);
+  }
+  if (!definition.paths[endpoint][method][type]) {
+    return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have ${type} definition`);
   }
   return responseBuilder(true);
 };
@@ -28,12 +32,9 @@ const common = (definition, endpoint, method) => {
  * @returns {BuilderResponse}
  */
 const request = (definition, endpoint, method, contentType) => {
-  const commonValidation = common(definition, endpoint, method);
+  const commonValidation = common(definition, endpoint, method, 'requestBody');
   if (!commonValidation.valid) {
     return commonValidation;
-  }
-  if (!definition.paths[endpoint][method].requestBody) {
-    return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have requestBody definition`);
   }
   if (!definition.paths[endpoint][method].requestBody.content[contentType]) {
     return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have requestBody with this ContentType: "${contentType}"`);
@@ -54,12 +55,9 @@ const request = (definition, endpoint, method, contentType) => {
  * @returns {BuilderResponse}
  */
 const params = (definition, endpoint, method, key, type) => {
-  const commonValidation = common(definition, endpoint, method);
+  const commonValidation = common(definition, endpoint, method, 'parameters');
   if (!commonValidation.valid) {
     return commonValidation;
-  }
-  if (!definition.paths[endpoint][method].parameters) {
-    return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have params definition`);
   }
   const parameter = definition.paths[endpoint][method].parameters
     .filter(({ in: paramType }) => paramType === type)
@@ -86,12 +84,9 @@ const params = (definition, endpoint, method, key, type) => {
  * @returns {BuilderResponse}
  */
 const response = (definition, endpoint, method, status, contentType) => {
-  const commonValidation = common(definition, endpoint, method);
+  const commonValidation = common(definition, endpoint, method, 'responses');
   if (!commonValidation.valid) {
     return commonValidation;
-  }
-  if (!definition.paths[endpoint][method].responses) {
-    return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have responses definition`);
   }
   if (!definition.paths[endpoint][method].responses[status]) {
     return responseBuilder(false, `Status: "${status}" not found in the OpenAPI definition for Method: "${method}" and Endpoint: "${endpoint}"`);

@@ -1,3 +1,9 @@
+[![Build](https://github.com/BRIKEV/openapi-validator-utils/actions/workflows/runTests.yml/badge.svg)](https://github.com/BRIKEV/openapi-validator-utils/actions/workflows/runTests.yml)
+[![Known Vulnerabilities](https://snyk.io/test/github/BRIKEV/openapi-validator-utils/badge.svg)](https://snyk.io/test/github/BRIKEV/openapi-validator-utils)
+[![Maintainability](https://api.codeclimate.com/v1/badges/efee2f09c8c1887ccbf9/maintainability)](https://codeclimate.com/github/BRIKEV/openapi-validator-utils/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/efee2f09c8c1887ccbf9/test_coverage)](https://codeclimate.com/github/BRIKEV/openapi-validator-utils/test_coverage)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
 # openapi-validator-utils
 
 This library expose some methods to validate request, parameters, headers and response based on your OpenAPI Json definition.
