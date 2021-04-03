@@ -24,6 +24,20 @@ const common = (definition, endpoint, method, type) => {
 };
 
 /**
+ * @param {string} value schema value
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ * @param {string} type OpenAPI type [requestBody, responses]
+ */
+const schemaValidation = (value, method, endpoint, contentType, type) => {
+  if (!value) {
+    return responseBuilder(false, `Schema not found for Method: "${method}" Endpoint: "${endpoint}" with ContentType: "${contentType}" ${type}`);
+  }
+  return responseBuilder(true);
+};
+
+/**
  * This method validates request info
  * @param {object} definition OpenApi definition
  * @param {string} endpoint OpenApi endpoint we want to validate
@@ -42,7 +56,12 @@ const request = (definition, endpoint, method, contentType) => {
   if (!definition.paths[endpoint][method].requestBody.content[contentType].schema) {
     return responseBuilder(false, `Schema not found for Method: "${method}" Endpoint: "${endpoint}" with ContentType: "${contentType}" requestBody`);
   }
-  return responseBuilder(true);
+  return schemaValidation(
+    definition.paths[endpoint][method].requestBody.content[contentType].schema,
+    method,
+    endpoint,
+    'requestBody',
+  );
 };
 
 /**
@@ -94,10 +113,12 @@ const response = (definition, endpoint, method, status, contentType) => {
   if (!definition.paths[endpoint][method].responses[status].content[contentType]) {
     return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have responses with this ContentType: "${contentType}"`);
   }
-  if (!definition.paths[endpoint][method].responses[status].content[contentType].schema) {
-    return responseBuilder(false, `Schema not found for Method: "${method}" Endpoint: "${endpoint}" with ContentType: "${contentType}" requestBody`);
-  }
-  return responseBuilder(true);
+  return schemaValidation(
+    definition.paths[endpoint][method].responses[status].content[contentType].schema,
+    method,
+    endpoint,
+    'response',
+  );
 };
 
 module.exports = { request, params, response };
