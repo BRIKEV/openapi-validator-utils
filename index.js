@@ -51,6 +51,12 @@ const {
  * @property {ValidateResponse} validateResponse
  */
 
+const configError = (error, handler) => {
+  if (!error.valid) {
+    throw errors.configuration(error.errorMessage, handler);
+  }
+};
+
 /**
  * Validate method
  * @param {object} openApiDef OpenAPI definition
@@ -58,17 +64,11 @@ const {
  * @returns {ValidatorMethods} validator methods
  */
 const validate = (openApiDef, options = {}) => {
-  const { valid: inputParameterValid, errorMessage } = inputValidation(openApiDef);
+  const inputValidationError = inputValidation(openApiDef);
   const errorHandler = options ? options.errorHandler : null;
-  if (!inputParameterValid) {
-    throw errors.configuration(errorMessage, errorHandler);
-  }
-  const {
-    valid: optionsValid, errorMessage: optionsErrorMessage,
-  } = optionsValidation(options);
-  if (!optionsValid) {
-    throw errors.configuration(optionsErrorMessage, errorHandler);
-  }
+  configError(inputValidationError, errorHandler);
+  const optionsValidationError = optionsValidation(options);
+  configError(optionsValidationError, errorHandler);
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
@@ -88,18 +88,16 @@ const validate = (openApiDef, options = {}) => {
   };
 
   const validateResponse = (value, endpoint, method, status, contentType = 'application/json') => {
-    const {
-      valid: validArgs, errorMessage: argsErrorMessage,
-    } = responseArgsValidation(value, endpoint, method, status);
-    if (!validArgs) {
-      throw errors.configuration(argsErrorMessage, errorHandler);
-    }
-    const {
-      valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.response(openApiDef, endpoint, method, status, contentType);
-    if (!validEndpoint) {
-      throw errors.configuration(endpointErrorMessage, errorHandler);
-    }
+    const argsValidationError = responseArgsValidation(value, endpoint, method, status);
+    configError(argsValidationError, errorHandler);
+    const responseEndpoint = endpointValidation.response(
+      openApiDef,
+      endpoint,
+      method,
+      status,
+      contentType,
+    );
+    configError(responseEndpoint, errorHandler);
     let requestBodySchema = {
       ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
@@ -108,18 +106,10 @@ const validate = (openApiDef, options = {}) => {
   };
 
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
-    const {
-      valid: validArgs, errorMessage: argsErrorMessage,
-    } = argsValidation(value, endpoint, method);
-    if (!validArgs) {
-      throw errors.configuration(argsErrorMessage, errorHandler);
-    }
-    const {
-      valid: validEndpoint, errorMessage: endpointErrorMessage,
-    } = endpointValidation.request(openApiDef, endpoint, method, contentType);
-    if (!validEndpoint) {
-      throw errors.configuration(endpointErrorMessage, errorHandler);
-    }
+    const argsValidationError = argsValidation(value, endpoint, method);
+    configError(argsValidationError, errorHandler);
+    const requestEndpoint = endpointValidation.request(openApiDef, endpoint, method, contentType);
+    configError(requestEndpoint, errorHandler);
     let requestBodySchema = {
       ...openApiDef.paths[endpoint][method].requestBody.content[contentType].schema,
     };
@@ -128,19 +118,11 @@ const validate = (openApiDef, options = {}) => {
   };
 
   const validateParam = type => (value, key, endpoint, method) => {
-    const {
-      valid: validArgs, errorMessage: argsErrorMessage,
-    } = argsValidation(value, endpoint, method, key);
-    if (!validArgs) {
-      throw errors.configuration(argsErrorMessage, errorHandler);
-    }
-    const {
-      valid: validEndpoint, errorMessage: endpointErrorMessage, parameter,
-    } = endpointValidation.params(openApiDef, endpoint, method, key, type);
-    if (!validEndpoint) {
-      throw errors.configuration(endpointErrorMessage, errorHandler);
-    }
-    let parametersSchema = parameter.schema;
+    const argsValidationError = argsValidation(value, endpoint, method, key);
+    configError(argsValidationError, errorHandler);
+    const paramEndpoint = endpointValidation.params(openApiDef, endpoint, method, key, type);
+    configError(paramEndpoint, errorHandler);
+    let parametersSchema = paramEndpoint.parameter.schema;
     parametersSchema = formatReferences(parametersSchema);
     return schemaValidation(value, parametersSchema, 'params');
   };
