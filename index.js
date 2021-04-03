@@ -1,4 +1,5 @@
 const Ajv = require('ajv').default;
+const addFormats = require('ajv-formats');
 const {
   formatReferences,
   recursiveOmit,
@@ -73,6 +74,7 @@ const validate = (openApiDef, options = {}) => {
     schemas: [defsSchema],
     ...(options.ajvConfig || {}),
   });
+  addFormats(ajv);
 
   const schemaValidation = (value, schema, type) => {
     const validateSchema = ajv.compile(schema);
@@ -92,11 +94,11 @@ const validate = (openApiDef, options = {}) => {
       contentType,
     );
     configError(responseEndpoint, errorHandler);
-    let requestBodySchema = {
+    let responseSchema = {
       ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
-    requestBodySchema = formatReferences(requestBodySchema);
-    return schemaValidation(value, requestBodySchema, 'response');
+    responseSchema = formatReferences(responseSchema);
+    return schemaValidation(value, responseSchema, 'response');
   };
 
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {

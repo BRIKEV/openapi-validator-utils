@@ -87,7 +87,7 @@ describe('validateResponse method', () => {
     it('should throw errors when reference type is not valid as an empty array', () => {
       expect(() => {
         validateResponse([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'get', 200);
-      }).toThrow('Error in response and Schema Song: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
+      }).toThrow('Error in response: Schema Song should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
     });
 
     it('should throw errors when reference type is not valid inside an schema', () => {
@@ -97,7 +97,7 @@ describe('validateResponse method', () => {
           title: 'Album 1',
           year: 2020,
         }], '/api/v1/albums', 'get', 200);
-      }).toThrow('Error in response and Schema Song/properties/year: should be array. You provide "[{"artist":"Test artist","title":"Album 1","year":2020}]"');
+      }).toThrow('Error in response: Schema Song/properties/year should be array. You provide "[{"artist":"Test artist","title":"Album 1","year":2020}]"');
     });
   });
 });
@@ -139,7 +139,7 @@ describe('validateResponse method with custom Handler', () => {
         validateResponse([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'get', 200);
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in response and Schema Song: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"',
+          'Error in response: Schema Song should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"',
           [{
             dataPath: '/0', keyword: 'required', message: "should have required property 'title'", params: { missingProperty: 'title' }, schemaPath: 'defs.json#/definitions/components/schemas/Song/required',
           }],

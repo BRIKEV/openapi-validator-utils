@@ -19,9 +19,15 @@ const enumValues = allowedValues => (
  * @param {string} schemaPath path to determine if it is an array
  * @return {string} value formatted
  */
-const arrayMessage = (message, schemaPath) => (
-  schemaPath.includes('items') ? `Array ${message} items` : message
-);
+const arrayMessage = (message, schemaPath) => {
+  if (schemaPath.includes('defs.json')) {
+    return `${formatSchemaMessage(schemaPath)} ${message}`;
+  }
+  if (schemaPath.includes('items')) {
+    return `Array ${message} items`;
+  }
+  return message;
+};
 
 /**
  * This methods format the AJV error
@@ -29,8 +35,9 @@ const arrayMessage = (message, schemaPath) => (
  * @returns {string} Error message
  */
 const formatArrayError = errors => (
-  errors.map(({ message, params, schemaPath }) => `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}`)
-    .join(', ')
+  errors.map(({ message, params, schemaPath }) => (
+    `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}`
+  )).join(', ')
 );
 
 /**
@@ -52,10 +59,8 @@ const ajvErrors = (ajvError, value, type, handler) => {
   const stringifyValue = isObject(value) ? JSON.stringify(value) : value;
   if (Array.isArray(ajvError)) {
     const message = formatArrayError(ajvError);
-    const isSchema = ajvError[0].schemaPath.includes('defs.json');
-    const schemaMessage = isSchema ? formatSchemaMessage(ajvError[0].schemaPath) : '';
     throw errorMethod[type](
-      `Error in ${type}${schemaMessage}: ${message}. You provide "${stringifyValue}"`,
+      `Error in ${type}: ${message}. You provide "${stringifyValue}"`,
       handler,
       ajvError,
     );

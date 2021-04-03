@@ -71,7 +71,7 @@ describe('ValidateRequest method', () => {
     it('should throw errors when reference type is not valid as an empty array', () => {
       expect(() => {
         validateRequest([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
-      }).toThrow('Error in request and Schema Song: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
+      }).toThrow('Error in request: Schema Song should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"');
     });
   });
 });
@@ -113,7 +113,7 @@ describe('ValidateRequest method with custom Handler', () => {
         validateRequest([{ invalidKey: 'nonValid' }], '/api/v1/albums', 'post');
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in request and Schema Song: should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"',
+          'Error in request: Schema Song should have required property \'title\'. You provide "[{"invalidKey":"nonValid"}]"',
           [{
             dataPath: '/0', keyword: 'required', message: "should have required property 'title'", params: { missingProperty: 'title' }, schemaPath: 'defs.json#/definitions/components/schemas/Song/required',
           }],
