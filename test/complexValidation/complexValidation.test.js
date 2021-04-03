@@ -21,10 +21,10 @@ describe('ValidateRequest method', () => {
   });
 
   describe('validate combined schemas', () => {
-    it.only('throw an error when validating combined schemas', () => {
+    it('throw an error when validating combined schemas', () => {
       expect(() => {
         validateResponse({ id: 'id' }, '/api/v1/song/{id}', 'get', 200, 'application/json');
-      }).toThrow('Error in request: should have required property \'title\'. You provide "{"id":"id"}"');
+      }).toThrow('rror in response: Schema IntrumentalSong should have required property \'title\', Schema PopSong should have required property \'title\', should match exactly one schema in oneOf. You provide "{"id":"id"}"');
     });
   });
 });

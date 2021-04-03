@@ -55,14 +55,14 @@ app.post('/api/v1/album', (req, res) => res.send('You save a song!'));
  * @typedef {object} IntrumentalSong
  * @property {string} title.required - The title
  * @property {string} band - The band
- * @property {number} year - The year - double
+ * @property {number} year - The year
  */
 
 /**
  * @typedef {object} PopSong
  * @property {string} title.required - The title
  * @property {string} artist - The artist
- * @property {integer} year - The year - int64
+ * @property {integer} year - The year
  */
 
 /**

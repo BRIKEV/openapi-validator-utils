@@ -11,7 +11,7 @@ const formatSchemaMessage = message => {
   const [, schema] = message.split('/schemas/');
   const errorType = message.match(/[^/]+(?=$|$)/);
   const schemaFormatted = schema.replace(`/${errorType}`, '');
-  const schemaMessage = ` and Schema ${schemaFormatted}`;
+  const schemaMessage = `Schema ${schemaFormatted}`;
   return schemaMessage;
 };
 
