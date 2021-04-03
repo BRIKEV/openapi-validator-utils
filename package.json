@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "ajv": "^7.1.1",
-    "ajv-formats": "ssh+https://github.com/ajv-validator/ajv-formats.git",
+    "ajv-formats": "^2.0.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
