@@ -2,7 +2,7 @@ const Ajv = require('ajv').default;
 const {
   formatReferences,
   recursiveOmit,
-  errors,
+  configError,
 } = require('./utils');
 const {
   argsValidation,
@@ -50,12 +50,6 @@ const {
  * @property {ValidateParams} validateHeaderParam
  * @property {ValidateResponse} validateResponse
  */
-
-const configError = (error, handler) => {
-  if (!error.valid) {
-    throw errors.configuration(error.errorMessage, handler);
-  }
-};
 
 /**
  * Validate method
