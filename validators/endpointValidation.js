@@ -1,4 +1,4 @@
-const { responseBuilder } = require('../utils');
+const { responseBuilder, existValue } = require('../utils');
 
 /** @module Validators/endpointValidation */
 
@@ -91,6 +91,38 @@ const params = (definition, endpoint, method, key, type) => {
 };
 
 /**
+ * This method validates required params
+ * @param {object[]} values Values we want to validate
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @returns {BuilderResponse}
+ */
+const requiredParams = (values, definition, endpoint, method) => {
+  const commonValidation = common(definition, endpoint, method, 'parameters');
+  if (!commonValidation.valid) {
+    return commonValidation;
+  }
+  if (!Array.isArray(values)) {
+    return responseBuilder(false, 'requiredParams values method expects an array');
+  }
+  const { parameters } = definition.paths[endpoint][method];
+  const DEFAULT_ERROR_VALUE = '';
+  const errors = parameters.reduce((acum, parameter) => {
+    let errorMessage = DEFAULT_ERROR_VALUE;
+    if (parameter.required || parameter.in === 'path') {
+      const param = values.find(value => value[parameter.name]);
+      errorMessage = !existValue(param, parameter.name) ? `${parameter.name} ${parameter.in} param is required.` : DEFAULT_ERROR_VALUE;
+    }
+    return `${acum} ${errorMessage}`;
+  }, DEFAULT_ERROR_VALUE).trim();
+  if (errors !== DEFAULT_ERROR_VALUE) {
+    return responseBuilder(false, `Required error: ${errors}`);
+  }
+  return responseBuilder(true);
+};
+
+/**
  * This method validates responses info
  * @param {object} definition OpenApi definition
  * @param {string} endpoint OpenApi endpoint we want to validate
@@ -118,4 +150,9 @@ const response = (definition, endpoint, method, status, contentType) => {
   );
 };
 
-module.exports = { request, params, response };
+module.exports = {
+  request,
+  params,
+  response,
+  requiredParams,
+};
