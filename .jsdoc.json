@@ -1,7 +1,7 @@
 {
   "opts": {
     "destination": "./docs",
-    "template": "node_modules/better-docs"
+    "template": "node_modules/tui-jsdoc-template"
   },
   "source": {
     "includePattern": ".+\\.js(doc|x)?$",
