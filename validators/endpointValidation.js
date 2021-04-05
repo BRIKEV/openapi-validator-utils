@@ -91,6 +91,33 @@ const params = (definition, endpoint, method, key, type) => {
 };
 
 /**
+ * This method validates required params
+ * @param {object[]} values Values we want to validate
+ * @param {object} definition OpenApi definition
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @returns {BuilderResponse}
+ */
+const requiredParams = (values, definition, endpoint, method) => {
+  const commonValidation = common(definition, endpoint, method, 'requiredParams');
+  if (!commonValidation.valid) {
+    return commonValidation;
+  }
+  const { parameters } = definition.paths[endpoint][method];
+  const DEFAULT_ERROR_VALUE = '';
+  const errors = parameters.reduce((acum, parameter) => {
+    let errorMessage = DEFAULT_ERROR_VALUE;
+    if (parameter.required) {
+      const exists = values.find(({ key }) => key === parameter.name);
+      errorMessage = !exists ? `Required ${parameter.in} param ${parameter.name}` : DEFAULT_ERROR_VALUE;
+    }
+    return `${acum} ${errorMessage}`;
+  }, DEFAULT_ERROR_VALUE);
+  if (errors !== DEFAULT_ERROR_VALUE) return responseBuilder(false, errors);
+  return responseBuilder(true);
+};
+
+/**
  * This method validates responses info
  * @param {object} definition OpenApi definition
  * @param {string} endpoint OpenApi endpoint we want to validate
@@ -118,4 +145,9 @@ const response = (definition, endpoint, method, status, contentType) => {
   );
 };
 
-module.exports = { request, params, response };
+module.exports = {
+  request,
+  params,
+  response,
+  requiredParams,
+};

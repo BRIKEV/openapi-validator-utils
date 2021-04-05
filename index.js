@@ -17,7 +17,7 @@ const {
 /**
  * @name ValidateRequest
  * @function
- * @param {object} definition OpenApi definition
+ * @param {*} value Value we want to validate
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
  * @param {string} contentType Content api of the request we want to validate
@@ -26,7 +26,7 @@ const {
 /**
  * @name ValidateParams
  * @function
- * @param {object} definition OpenApi definition
+ * @param {*} value Value we want to validate
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
  * @param {string} contentType Content api of the request we want to validate
@@ -35,7 +35,7 @@ const {
 /**
  * @name ValidateResponse
  * @function
- * @param {object} definition OpenApi definition
+ * @param {*} value Value we want to validate
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
  * @param {string} status OpenApi status we want to validate
@@ -81,6 +81,18 @@ const validate = (openApiDef, options = {}) => {
     const valid = validateSchema(value);
     if (!valid) return ajvErrors(validateSchema.errors, value, type, errorHandler);
     return true;
+  };
+
+  const validateRequiredValues = (values, endpoint, method) => {
+    const argsValidationError = argsValidation(values, endpoint, method);
+    configError(argsValidationError, errorHandler);
+    const requiredParamsError = endpointValidation.requiredParams(
+      values,
+      openApiDef,
+      endpoint,
+      method,
+    );
+    configError(requiredParamsError, errorHandler);
   };
 
   const validateResponse = (value, endpoint, method, status, contentType = 'application/json') => {
@@ -129,6 +141,7 @@ const validate = (openApiDef, options = {}) => {
     validatePathParam: validateParam('path'),
     validateHeaderParam: validateParam('header'),
     validateResponse,
+    validateRequiredValues,
   };
 };
 
