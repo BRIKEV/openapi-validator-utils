@@ -120,7 +120,7 @@ const validate = (openApiDef, options = {}) => {
     configError(paramEndpoint, errorHandler);
     let parametersSchema = paramEndpoint.parameter.schema;
     parametersSchema = formatReferences(parametersSchema);
-    return schemaValidation(value, parametersSchema, 'params');
+    return schemaValidation(value, parametersSchema, type);
   };
 
   return {
