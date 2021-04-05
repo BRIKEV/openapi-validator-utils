@@ -93,6 +93,7 @@ const validate = (openApiDef, options = {}) => {
       method,
     );
     configError(requiredParamsError, errorHandler);
+    return true;
   };
 
   const validateResponse = (value, endpoint, method, status, contentType = 'application/json') => {

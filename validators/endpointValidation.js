@@ -90,6 +90,11 @@ const params = (definition, endpoint, method, key, type) => {
   };
 };
 
+const existValue = (value, key) => {
+  if (!value) return false;
+  return !(value[key] === 'undefined' || !value[key]);
+};
+
 /**
  * This method validates required params
  * @param {object[]} values Values we want to validate
@@ -99,21 +104,26 @@ const params = (definition, endpoint, method, key, type) => {
  * @returns {BuilderResponse}
  */
 const requiredParams = (values, definition, endpoint, method) => {
-  const commonValidation = common(definition, endpoint, method, 'requiredParams');
+  const commonValidation = common(definition, endpoint, method, 'parameters');
   if (!commonValidation.valid) {
     return commonValidation;
+  }
+  if (!Array.isArray(values)) {
+    return responseBuilder(false, 'requiredParams values method expects an array');
   }
   const { parameters } = definition.paths[endpoint][method];
   const DEFAULT_ERROR_VALUE = '';
   const errors = parameters.reduce((acum, parameter) => {
     let errorMessage = DEFAULT_ERROR_VALUE;
-    if (parameter.required) {
-      const exists = values.find(({ key }) => key === parameter.name);
-      errorMessage = !exists ? `Required ${parameter.in} param ${parameter.name}` : DEFAULT_ERROR_VALUE;
+    if (parameter.required || parameter.in === 'path') {
+      const param = values.find(value => value[parameter.name]);
+      errorMessage = !existValue(param, parameter.name) ? `${parameter.name} ${parameter.in} param is required.` : DEFAULT_ERROR_VALUE;
     }
     return `${acum} ${errorMessage}`;
-  }, DEFAULT_ERROR_VALUE);
-  if (errors !== DEFAULT_ERROR_VALUE) return responseBuilder(false, errors);
+  }, DEFAULT_ERROR_VALUE).trim();
+  if (errors !== DEFAULT_ERROR_VALUE) {
+    return responseBuilder(false, `Required error: ${errors}`);
+  }
   return responseBuilder(true);
 };
 
