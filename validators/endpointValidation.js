@@ -1,4 +1,4 @@
-const { responseBuilder } = require('../utils');
+const { responseBuilder, existValue } = require('../utils');
 
 /** @module Validators/endpointValidation */
 
@@ -88,11 +88,6 @@ const params = (definition, endpoint, method, key, type) => {
     ...responseBuilder(true),
     parameter,
   };
-};
-
-const existValue = (value, key) => {
-  if (!value) return false;
-  return !(value[key] === 'undefined' || !value[key]);
 };
 
 /**
