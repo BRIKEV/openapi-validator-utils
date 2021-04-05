@@ -8,12 +8,11 @@
     "excludePattern": ".*\/(node_modules|test)\/*"
   },
   "templates": {
+    "title": "openapi-validator-utils",
+    "footerText": "OpenAPI request, parameters, headers and response validator methods",
+    "name": "openapi-validator-utils",
     "default": {
       "outputSourceFiles": false
-    },
-    "better-docs": {
-      "title": "openapi-validator-utils",
-      "name": "openapi-validator-utils"
     }
   }
 }
