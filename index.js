@@ -43,6 +43,22 @@ const {
  */
 
 /**
+ * @name IsRequestRequired
+ * @function
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ * @param {string} contentType Content api of the request we want to validate
+ */
+
+/**
+ * @name ValidateRequiredValues
+ * @function
+  * @param {*} value Values we want to see if are send as required parameters
+ * @param {string} endpoint OpenApi endpoint we want to validate
+ * @param {string} method OpenApi method we want to validate
+ */
+
+/**
  * Validator methods
  * @typedef {object} ValidatorMethods
  * @property {ValidateRequest} validateRequest
@@ -50,6 +66,8 @@ const {
  * @property {ValidateParams} validatePathParam
  * @property {ValidateParams} validateHeaderParam
  * @property {ValidateResponse} validateResponse
+ * @property {IsRequestRequired} isRequestRequired
+ * @property {ValidateRequiredValues} validateRequiredValues
  */
 
 /**
@@ -114,6 +132,15 @@ const validate = (openApiDef, options = {}) => {
     return schemaValidation(value, responseSchema, 'response');
   };
 
+  const isRequestRequired = (endpoint, method, contentType = 'application/json') => {
+    if (method === 'get') return false;
+    const argsValidationError = argsValidation('request', endpoint, method);
+    configError(argsValidationError, errorHandler);
+    const requestEndpoint = endpointValidation.request(openApiDef, endpoint, method, contentType);
+    configError(requestEndpoint, errorHandler);
+    return !!openApiDef.paths[endpoint][method].requestBody.required;
+  };
+
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
     const argsValidationError = argsValidation(value, endpoint, method);
     configError(argsValidationError, errorHandler);
@@ -143,6 +170,7 @@ const validate = (openApiDef, options = {}) => {
     validateHeaderParam: validateParam('header'),
     validateResponse,
     validateRequiredValues,
+    isRequestRequired,
   };
 };
 
