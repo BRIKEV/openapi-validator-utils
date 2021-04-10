@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
+const extraMock = require('./extraMock.json');
+
 const options = {
   info: {
     version: '1.0.0',
@@ -15,7 +17,7 @@ const options = {
 };
 
 const app = express();
-const instance = expressJSDocSwagger(app)(options);
+const instance = expressJSDocSwagger(app)(options, extraMock);
 
 instance.on('finish', data => {
   const dataStringified = JSON.stringify(data, null, 2);
@@ -50,6 +52,28 @@ app.post('/api/v1/songs', (req, res) => res.json({}));
  * @return {object} 200 - Album created
  */
 app.post('/api/v1/album', (req, res) => res.send('You save a song!'));
+
+/**
+ * A song response
+ * @typedef {object} SongResponse
+ * @property {string} title.required - The title
+ * @property {string} release - The year - date
+ */
+
+/**
+ * GET /api/v1/songs/{id}
+ * @return {SongResponse} 200 - Album created
+ */
+app.get('/api/v1/songs/:id', (req, res) => res.json({ title: 'example', release: new Date() }));
+
+/**
+ * GET /api/v1/date
+ * @param {string} id.query - song id
+ * @param {string} email.query - song email
+ * @param {string} dateTime.query - song date type
+ * @return {object} 200 - date description
+ */
+app.get('/api/v1/date', (req, res) => res.send('invalidDate'));
 
 /**
  * @typedef {object} IntrumentalSong
