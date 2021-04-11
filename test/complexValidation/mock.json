@@ -40,6 +40,24 @@
           }
         }
       },
+      "SongResponse": {
+        "description": "A song response",
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "The title",
+            "type": "string"
+          },
+          "release": {
+            "description": "The year",
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
       "IntrumentalSong": {
         "description": "",
         "required": [
@@ -159,6 +177,82 @@
           "description": "songs info",
           "required": true
         }
+      }
+    },
+    "/api/v1/songs/{id}": {
+      "get": {
+        "deprecated": false,
+        "summary": "",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Album created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SongResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "tags": []
+      }
+    },
+    "/api/v1/date": {
+      "get": {
+        "deprecated": false,
+        "summary": "",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "date description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "song id",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "song email",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          {
+            "name": "dateTime",
+            "in": "query",
+            "description": "song date type",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "tags": []
       }
     },
     "/api/v1/song/{id}": {

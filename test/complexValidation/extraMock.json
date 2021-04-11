@@ -1,0 +1,59 @@
+{
+  "paths": {
+    "/api/v1/date": {
+      "get": {
+        "deprecated": false,
+        "summary": "",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "date description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "song id",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "song email",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          {
+            "name": "dateTime",
+            "in": "query",
+            "description": "song date type",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "tags": []
+      }
+    }
+  }
+}
