@@ -1,10 +1,12 @@
 const { isFunction } = require('lodash');
 const util = require('util');
 
+const ERROR_NAME = 'OpenAPIUtilsError';
+
 function InputValidationError(message, type, extra) {
   Error.captureStackTrace(this, this.constructor);
-  this.name = 'OpenAPIUtilsError';
-  this.type = type;
+  this.name = ERROR_NAME;
+  this.type = `${ERROR_NAME}:${type}`;
   this.message = message;
   this.extra = extra;
 }
