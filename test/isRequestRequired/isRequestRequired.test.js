@@ -28,12 +28,6 @@ describe('isRequestRequired method', () => {
       }).toThrow('Endpoint: "/api/v1/non-valid-endpoint" not found in the OpenAPI definition');
     });
 
-    it('should throw errors when endpoint\'s method does not exist', () => {
-      expect(() => {
-        isRequestRequired('/api/v1/name', 'patch');
-      }).toThrow('Method: "patch" not found in the OpenAPI definition for "/api/v1/name" endpoint');
-    });
-
     it('should throw errors when endpoint\'s content-type does not exist', () => {
       expect(() => {
         isRequestRequired('/api/v1/name', 'post', 'html');
@@ -47,6 +41,11 @@ describe('isRequestRequired method', () => {
 
     it('should return false when request is not required', () => {
       const result = isRequestRequired('/api/v1/albums', 'post');
+      expect(result).toBeFalsy();
+    });
+
+    it('should return false when request is not documented', () => {
+      const result = isRequestRequired('/api/v1/name', 'patch');
       expect(result).toBeFalsy();
     });
 
@@ -76,10 +75,10 @@ describe('isRequestRequired method with custom Handler', () => {
 
     it('should throw errors when reference type is not valid', () => {
       try {
-        isRequestRequired('/api/v1/name', 'patch');
+        isRequestRequired('/api/v1/name', 'post', 'html');
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Method: "patch" not found in the OpenAPI definition for "/api/v1/name" endpoint',
+          'Method: "post" and Endpoint: "/api/v1/name" does not have requestBody with this ContentType: "html"',
           undefined,
         );
       }

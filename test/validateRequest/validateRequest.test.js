@@ -46,6 +46,12 @@ describe('ValidateRequest method', () => {
       }).toThrow('Method: "post" and Endpoint: "/api/v1/name" does not have requestBody with this ContentType: "html"');
     });
 
+    it('should throw errors when endpoint\'s don\'t have requestBody definition', () => {
+      expect(() => {
+        validateRequest({}, '/api/v1/name', 'patch');
+      }).toThrow('Method: "patch" and Endpoint: "/api/v1/name" does not have requestBody definition');
+    });
+
     it('should validate basic string type', () => {
       const result = validateRequest('valid string', '/api/v1/name', 'post');
       expect(result).toBeTruthy();

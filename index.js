@@ -133,12 +133,20 @@ const validate = (openApiDef, options = {}) => {
   };
 
   const isRequestRequired = (endpoint, method, contentType = 'application/json') => {
-    if (method === 'get') return false;
-    const argsValidationError = argsValidation('request', endpoint, method);
-    configError(argsValidationError, errorHandler);
-    const requestEndpoint = endpointValidation.request(openApiDef, endpoint, method, contentType);
-    configError(requestEndpoint, errorHandler);
-    return !!openApiDef.paths[endpoint][method].requestBody.required;
+    try {
+      if (method === 'get') return false;
+      const argsValidationError = argsValidation('request', endpoint, method);
+      configError(argsValidationError, errorHandler);
+      const requestEndpoint = endpointValidation.request(openApiDef, endpoint, method, contentType);
+      configError(requestEndpoint, errorHandler);
+      return !!openApiDef.paths[endpoint][method].requestBody.required;
+    } catch (error) {
+      // When we receive this is because it was not documented
+      // Document request body it is not required there might be endpoints
+      // where you don't want request body
+      if (error.message.includes('does not have requestBody definition')) return false;
+      throw error;
+    }
   };
 
   const validateRequest = (value, endpoint, method, contentType = 'application/json') => {
