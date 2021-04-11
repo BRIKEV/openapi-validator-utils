@@ -55,3 +55,9 @@ app.post('/api/v1/albums', (req, res) => res.send('Hello World!'));
  * @return {object} 200 - song response
  */
 app.post('/api/v1/name', (req, res) => res.send('Hello World!'));
+
+/**
+ * PATCH /api/v1/name
+ * @return {object} 200 - song response
+ */
+app.patch('/api/v1/name', (req, res) => res.send('Hello World!'));
