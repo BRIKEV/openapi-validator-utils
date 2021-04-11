@@ -2,7 +2,6 @@ const Ajv = require('ajv').default;
 const addFormats = require('ajv-formats');
 const {
   formatReferences,
-  recursiveOmit,
   configError,
 } = require('./utils');
 const {
@@ -85,7 +84,7 @@ const validate = (openApiDef, options = {}) => {
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
-      components: recursiveOmit(openApiDef.components),
+      components: formatReferences(openApiDef.components),
     },
   };
   const ajv = new Ajv({

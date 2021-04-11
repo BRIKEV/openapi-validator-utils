@@ -61,3 +61,17 @@ app.post('/api/v1/name', (req, res) => res.send('Hello World!'));
  * @return {object} 200 - song response
  */
 app.patch('/api/v1/name', (req, res) => res.send('Hello World!'));
+
+/**
+ * A Detailed song
+ * @typedef {object} Author
+ * @property {string} name.required - Album title
+ * @property {array<Song>} songs - Author songs
+ */
+
+/**
+ * POST /api/v1/author/songs
+ * @param {Author} request.body.required - Author name and songs
+ * @return {object} 200 - song response
+ */
+app.post('/api/v1/author/songs', (req, res) => res.send('You save a song!'));
