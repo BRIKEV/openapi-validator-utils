@@ -22,6 +22,7 @@
         "properties": {
           "title": {
             "description": "The title",
+            "nullable": true,
             "type": "string"
           },
           "artist": {

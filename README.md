@@ -47,16 +47,18 @@ These are the object keys the validate method returns.
 | [validatePathParam](#validatePathParam)     | function | Method to validate an endpoint's path parameter |
 | [validateHeaderParam](#validateHeaderParam) | function | Method to validate an endpoint's header parameter |
 | [validateResponse](#validateResponse)       | function | Method to validate an endpoint's response |
+| [validateRequiredValues](#validateRequiredValues) | function | Method to required parameters |
+| [isRequestRequired](#isRequestRequired) | function | Method to validate if requestBody is necessary |
 
 #### validateRequest
 
 ```js
-validateRequest(definition, endpoint, method, contentType)
+validateRequest(payload, endpoint, method, contentType)
 ```
 
 | Name        | Type   | Description        |
 | ------------|:------:| ------------------:|
-| definition  | object | OpenAPI definition |
+| payload     | object | Payload we want to validate |
 | endpoint    | string | OpenApi endpoint we want to validate |
 | method      | string | OpenApi method we want to validate |
 | contentType | string | Content api of the request we want to validate. Optional |
@@ -64,12 +66,12 @@ validateRequest(definition, endpoint, method, contentType)
 #### validateQueryParam
 
 ```js
-validateQueryParam(definition, endpoint, method, contentType)
+validateQueryParam(payload, endpoint, method, contentType)
 ```
 
 | Name        | Type   | Description        |
 | ------------|:------:| ------------------:|
-| definition  | object | OpenAPI definition |
+| payload     | object | Payload we want to validate |
 | endpoint    | string | OpenApi endpoint we want to validate |
 | method      | string | OpenApi method we want to validate |
 | contentType | string | Content api of the request we want to validate. Optional |
@@ -77,12 +79,12 @@ validateQueryParam(definition, endpoint, method, contentType)
 #### validatePathParam
 
 ```js
-validatePathParam(definition, endpoint, method, contentType)
+validatePathParam(payload, endpoint, method, contentType)
 ```
 
 | Name        | Type   | Description        |
 | ------------|:------:| ------------------:|
-| definition  | object | OpenAPI definition |
+| payload     | object | Payload we want to validate |
 | endpoint    | string | OpenApi endpoint we want to validate |
 | method      | string | OpenApi method we want to validate |
 | contentType | string | Content api of the request we want to validate. Optional |
@@ -90,12 +92,12 @@ validatePathParam(definition, endpoint, method, contentType)
 #### validateHeaderParam
 
 ```js
-validateHeaderParam(definition, endpoint, method, contentType)
+validateHeaderParam(payload, endpoint, method, contentType)
 ```
 
 | Name        | Type   | Description        |
 | ------------|:------:| ------------------:|
-| definition  | object | OpenAPI definition |
+| payload     | object | Payload we want to validate |
 | endpoint    | string | OpenApi endpoint we want to validate |
 | method      | string | OpenApi method we want to validate |
 | contentType | string | Content api of the request we want to validate. Optional |
@@ -103,14 +105,37 @@ validateHeaderParam(definition, endpoint, method, contentType)
 #### validateResponse
 
 ```js
-validateResponse(definition, endpoint, method, status, contentType)
+validateResponse(payload, endpoint, method, status, contentType)
 ```
 
 | Name        | Type   | Description        |
 | ------------|:------:| ------------------:|
-| definition  | object | OpenAPI definition |
+| payload     | object | Payload we want to validate |
 | endpoint    | string | OpenApi endpoint we want to validate |
 | method      | string | OpenApi method we want to validate |
 | status      | string | OpenApi status we want to validate |
 | contentType | string | Content api of the request we want to validate. Optional |
 
+#### validateRequiredValues
+
+```js
+validateRequiredValues(values, endpoint, method)
+```
+
+| Name        | Type   | Description        |
+| ------------|:------:| ------------------:|
+| values      | object | Values we want to check if they are required |
+| endpoint    | string | OpenApi endpoint we want to validate |
+| method      | string | OpenApi method we want to validate |
+
+#### isRequestRequired
+
+```js
+isRequestRequired(endpoint, method, contentType)
+```
+
+| Name        | Type   | Description        |
+| ------------|:------:| ------------------:|
+| endpoint    | string | OpenApi endpoint we want to validate |
+| method      | string | OpenApi method we want to validate |
+| contentType | string | Content api of the request we want to validate. Optional |
