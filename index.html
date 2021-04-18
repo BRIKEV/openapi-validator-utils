@@ -18,9 +18,11 @@
 </head>
 <body>
 <nav class="lnb" id="lnb">
-    <div class="logo" style="">
+    <div class="logo" style="width: 150px; height: 13px">
         
-            <img src="img/toast-ui.png" width="100%" height="100%">
+            <a href="https://brikev.github.io/openapi-validator-utils/" rel="noopener noreferrer" target="_blank">
+                <img src="https://github.com/BRIKEV/openapi-validator-utils/tree/master/assets/350x75.jpg" width="100%" height="100%">
+            </a>
         
     </div>
     <div class="title">
@@ -139,10 +141,20 @@ validator methods</p>
 <td style="text-align:center">function</td>
 <td style="text-align:right">Method to validate an endpoint's response</td>
 </tr>
+<tr>
+<td><a href="#validateRequiredValues">validateRequiredValues</a></td>
+<td style="text-align:center">function</td>
+<td style="text-align:right">Method to required parameters</td>
+</tr>
+<tr>
+<td><a href="#isRequestRequired">isRequestRequired</a></td>
+<td style="text-align:center">function</td>
+<td style="text-align:right">Method to validate if requestBody is necessary</td>
+</tr>
 </tbody>
 </table>
 <h4>validateRequest</h4>
-<pre class="prettyprint source lang-js"><code>validateRequest(definition, endpoint, method, contentType)
+<pre class="prettyprint source lang-js"><code>validateRequest(payload, endpoint, method, contentType)
 </code></pre>
 <table>
 <thead>
@@ -154,9 +166,9 @@ validator methods</p>
 </thead>
 <tbody>
 <tr>
-<td>definition</td>
+<td>payload</td>
 <td style="text-align:center">object</td>
-<td style="text-align:right">OpenAPI definition</td>
+<td style="text-align:right">Payload we want to validate</td>
 </tr>
 <tr>
 <td>endpoint</td>
@@ -176,7 +188,7 @@ validator methods</p>
 </tbody>
 </table>
 <h4>validateQueryParam</h4>
-<pre class="prettyprint source lang-js"><code>validateQueryParam(definition, endpoint, method, contentType)
+<pre class="prettyprint source lang-js"><code>validateQueryParam(payload, endpoint, method, contentType)
 </code></pre>
 <table>
 <thead>
@@ -188,9 +200,9 @@ validator methods</p>
 </thead>
 <tbody>
 <tr>
-<td>definition</td>
+<td>payload</td>
 <td style="text-align:center">object</td>
-<td style="text-align:right">OpenAPI definition</td>
+<td style="text-align:right">Payload we want to validate</td>
 </tr>
 <tr>
 <td>endpoint</td>
@@ -210,7 +222,7 @@ validator methods</p>
 </tbody>
 </table>
 <h4>validatePathParam</h4>
-<pre class="prettyprint source lang-js"><code>validatePathParam(definition, endpoint, method, contentType)
+<pre class="prettyprint source lang-js"><code>validatePathParam(payload, endpoint, method, contentType)
 </code></pre>
 <table>
 <thead>
@@ -222,9 +234,9 @@ validator methods</p>
 </thead>
 <tbody>
 <tr>
-<td>definition</td>
+<td>payload</td>
 <td style="text-align:center">object</td>
-<td style="text-align:right">OpenAPI definition</td>
+<td style="text-align:right">Payload we want to validate</td>
 </tr>
 <tr>
 <td>endpoint</td>
@@ -244,7 +256,7 @@ validator methods</p>
 </tbody>
 </table>
 <h4>validateHeaderParam</h4>
-<pre class="prettyprint source lang-js"><code>validateHeaderParam(definition, endpoint, method, contentType)
+<pre class="prettyprint source lang-js"><code>validateHeaderParam(payload, endpoint, method, contentType)
 </code></pre>
 <table>
 <thead>
@@ -256,9 +268,9 @@ validator methods</p>
 </thead>
 <tbody>
 <tr>
-<td>definition</td>
+<td>payload</td>
 <td style="text-align:center">object</td>
-<td style="text-align:right">OpenAPI definition</td>
+<td style="text-align:right">Payload we want to validate</td>
 </tr>
 <tr>
 <td>endpoint</td>
@@ -278,7 +290,7 @@ validator methods</p>
 </tbody>
 </table>
 <h4>validateResponse</h4>
-<pre class="prettyprint source lang-js"><code>validateResponse(definition, endpoint, method, status, contentType)
+<pre class="prettyprint source lang-js"><code>validateResponse(payload, endpoint, method, status, contentType)
 </code></pre>
 <table>
 <thead>
@@ -290,9 +302,9 @@ validator methods</p>
 </thead>
 <tbody>
 <tr>
-<td>definition</td>
+<td>payload</td>
 <td style="text-align:center">object</td>
-<td style="text-align:right">OpenAPI definition</td>
+<td style="text-align:right">Payload we want to validate</td>
 </tr>
 <tr>
 <td>endpoint</td>
@@ -315,6 +327,64 @@ validator methods</p>
 <td style="text-align:right">Content api of the request we want to validate. Optional</td>
 </tr>
 </tbody>
+</table>
+<h4>validateRequiredValues</h4>
+<pre class="prettyprint source lang-js"><code>validateRequiredValues(values, endpoint, method)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td style="text-align:center">object</td>
+<td style="text-align:right">Values we want to check if they are required</td>
+</tr>
+<tr>
+<td>endpoint</td>
+<td style="text-align:center">string</td>
+<td style="text-align:right">OpenApi endpoint we want to validate</td>
+</tr>
+<tr>
+<td>method</td>
+<td style="text-align:center">string</td>
+<td style="text-align:right">OpenApi method we want to validate</td>
+</tr>
+</tbody>
+</table>
+<h4>isRequestRequired</h4>
+<pre class="prettyprint source lang-js"><code>isRequestRequired(endpoint, method, contentType)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th style="text-align:center">Type</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>endpoint</td>
+<td style="text-align:center">string</td>
+<td style="text-align:right">OpenApi endpoint we want to validate</td>
+</tr>
+<tr>
+<td>method</td>
+<td style="text-align:center">string</td>
+<td style="text-align:right">OpenApi method we want to validate</td>
+</tr>
+<tr>
+<td>contentType</td>
+<td style="text-align:center">string</td>
+<td style="text-align:right">Content api of the request we want to validate. Optional</td>
+</tr>
+</tbody>
 </table></article>
     </section>
 
@@ -326,7 +396,7 @@ validator methods</p>
 </div>
 
 <footer>
-    <img class="logo" src="img/toast-ui.png" style="">
+    <img class="logo" src="https://github.com/BRIKEV/openapi-validator-utils/tree/master/assets/350x75.jpg" style="width: 150px; height: 13px">
     <div class="footer-text">OpenAPI request, parameters, headers and response validator methods</div>
 </footer>
 <script>prettyPrint();</script>
