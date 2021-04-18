@@ -11,6 +11,12 @@
     "title": "openapi-validator-utils",
     "footerText": "OpenAPI request, parameters, headers and response validator methods",
     "name": "openapi-validator-utils",
+    "logo": {
+      "url": "https://github.com/BRIKEV/openapi-validator-utils/tree/master/assets/350x75.jpg",
+      "width": "150px",
+      "height": "13px",
+      "link": "https://brikev.github.io/openapi-validator-utils/"
+    },
     "default": {
       "outputSourceFiles": false
     }
