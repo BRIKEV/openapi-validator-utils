@@ -30,7 +30,7 @@ instance.on('finish', data => {
 /**
  * A song
  * @typedef {object} Song
- * @property {string} title.required - The title
+ * @property {string|null} title.required - The title
  * @property {string} artist - The artist
  * @property {integer} year - The year
  */
