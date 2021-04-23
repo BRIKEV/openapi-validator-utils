@@ -54,31 +54,31 @@ describe('validateQueryParam method', () => {
     it('should throw errors when basic type is not valid', () => {
       expect(() => {
         validateQueryParam(false, 'name', '/api/v1', 'get');
-      }).toThrow('Error in query: should be string. You provide "false"');
+      }).toThrow('Error in query: must be string. You provide "false"');
     });
 
     it('should throw errors when array of string type is not valid', () => {
       expect(() => {
         validateQueryParam(false, 'name', '/api/v1', 'get');
-      }).toThrow('Error in query: should be string. You provide "false"');
+      }).toThrow('Error in query: must be string. You provide "false"');
     });
 
     it('should throw errors when basic type is not a valid value of the enum list', () => {
       expect(() => {
         validateQueryParam('test', 'name', '/api/v1', 'get');
-      }).toThrow('Error in query: should be equal to one of the allowed values: type1, type2. You provide "test"');
+      }).toThrow('Error in query: must be equal to one of the allowed values: type1, type2. You provide "test"');
     });
 
     it('should throw errors when multiple query params are not valid', () => {
       expect(() => {
         validateQueryParam(1234, 'license', '/api/v1/albums', 'get');
-      }).toThrow('Error in query: should be string. You provide "1234"');
+      }).toThrow('Error in query: must be string. You provide "1234"');
     });
 
     it('should throw errors with array invalid type', () => {
       expect(() => {
         validateQueryParam([1], 'name', '/api/v1/albums/{id}', 'get');
-      }).toThrow('Error in query: Array should be string items. You provide "[1]"');
+      }).toThrow('Error in query: Array must be string items. You provide "[1]"');
     });
 
     it('should throw errors when reference key is not found', () => {
@@ -100,9 +100,9 @@ describe('validateQueryParam method with custom Handler', () => {
         validateQueryParam(false, 'name', '/api/v1', 'get');
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in query: should be string. You provide "false"',
+          'Error in query: must be string. You provide "false"',
           [{
-            dataPath: '', keyword: 'type', message: 'should be string', params: { type: 'string' }, schemaPath: '#/type',
+            instancePath: '', keyword: 'type', message: 'must be string', params: { type: 'string' }, schemaPath: '#/type',
           }],
         );
       }
@@ -113,9 +113,9 @@ describe('validateQueryParam method with custom Handler', () => {
         validateQueryParam('test', 'name', '/api/v1', 'get');
       } catch (err) {
         expect(customErrorCallback).toHaveBeenCalledWith(
-          'Error in query: should be equal to one of the allowed values: type1, type2. You provide "test"',
+          'Error in query: must be equal to one of the allowed values: type1, type2. You provide "test"',
           [{
-            dataPath: '', keyword: 'enum', message: 'should be equal to one of the allowed values', params: { allowedValues: ['type1', 'type2'] }, schemaPath: '#/enum',
+            instancePath: '', keyword: 'enum', message: 'must be equal to one of the allowed values', params: { allowedValues: ['type1', 'type2'] }, schemaPath: '#/enum',
           }],
         );
       }

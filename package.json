@@ -4,7 +4,7 @@
   "description": "OpenAPI request, parameters, headers and response validator methods",
   "main": "index.js",
   "dependencies": {
-    "ajv": "^7.1.1",
+    "ajv": "^8.1.0",
     "ajv-formats": "^2.0.2",
     "lodash": "^4.17.21"
   },
