@@ -10,7 +10,7 @@ describe('ValidateRequest method', () => {
   it('throw an error when validating form params', () => {
     expect(() => {
       validateRequest({ id: 'id' }, '/api/v1/song', 'post', 'application/x-www-form-urlencoded');
-    }).toThrow('Error in request: should have required property \'title\'. You provide "{"id":"id"}"');
+    }).toThrow('Error in request: must have required property \'title\'. You provide "{"id":"id"}"');
   });
 
   // We have to skip this test until this issue is solved https://github.com/ajv-validator/ajv-formats/issues/25
@@ -26,14 +26,14 @@ describe('ValidateRequest method', () => {
         title: 'valid',
         release: 'invalid date',
       }, '/api/v1/songs/{id}', 'get', 200);
-    }).toThrow('Error in response: Schema SongResponse/properties/release should match format "date". You provide "{"title":"valid","release":"invalid date"}"');
+    }).toThrow('Error in response: Schema SongResponse/properties/release must match format "date". You provide "{"title":"valid","release":"invalid date"}"');
   });
 
   describe('String types', () => {
     it('validate date type', () => {
       expect(() => {
         validateQueryParam('invalidDate', 'id', '/api/v1/date', 'get');
-      }).toThrow('Error in query: should match format "date". You provide "invalidDate"');
+      }).toThrow('Error in query: must match format "date". You provide "invalidDate"');
     });
 
     it('should not return error with date type', () => {
@@ -51,13 +51,13 @@ describe('ValidateRequest method', () => {
     it('should throw an error when validating combined schemas', () => {
       expect(() => {
         validateResponse({ id: 'id' }, '/api/v1/song/{id}', 'get', 200, 'application/json');
-      }).toThrow('Error in response: Schema IntrumentalSong should have required property \'title\', Schema PopSong should have required property \'title\', should match exactly one schema in oneOf. You provide "{"id":"id"}"');
+      }).toThrow('Error in response: Schema IntrumentalSong must have required property \'title\', Schema PopSong must have required property \'title\', must match exactly one schema in oneOf. You provide "{"id":"id"}"');
     });
 
     it('should throw an error when validating combined inside a different schemas', () => {
       expect(() => {
         validateResponse({ value: false }, '/api/v1/internal/reference', 'get', 200, 'application/json');
-      }).toThrow('Error in response: should be string, should be number, Schema CustomError should be object, should match exactly one schema in oneOf, Schema PopSong should have required property \'title\', should match exactly one schema in oneOf. You provide "{"value":false}"');
+      }).toThrow('Error in response: must be string, must be number, Schema CustomError must be object, must match exactly one schema in oneOf, Schema PopSong must have required property \'title\', must match exactly one schema in oneOf. You provide "{"value":false}"');
     });
 
     it.skip('should not throw an error when validating combined inside a different schemas', () => {
