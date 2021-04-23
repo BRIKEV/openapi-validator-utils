@@ -99,6 +99,36 @@
             "type": "integer"
           }
         }
+      },
+      "CustomError": {
+        "description": "Test schema",
+        "type": "object",
+        "properties": {
+          "message": {
+            "description": "",
+            "type": "string"
+          }
+        }
+      },
+      "TestSchema": {
+        "description": "Test schema",
+        "type": "object",
+        "properties": {
+          "value": {
+            "description": "Property with multiple type support",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "$ref": "#/components/schemas/CustomError"
+              }
+            ]
+          }
+        }
       }
     }
   },
@@ -291,6 +321,36 @@
             }
           }
         ],
+        "tags": [
+          "album"
+        ]
+      }
+    },
+    "/api/v1/internal/reference": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/TestSchema"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PopSong"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
         "tags": [
           "album"
         ]

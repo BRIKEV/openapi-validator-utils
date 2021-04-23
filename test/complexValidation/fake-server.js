@@ -101,3 +101,27 @@ app.get('/api/v1/song/:id', (req, res) => (
     title: 'abum 1',
   })
 ));
+
+/**
+ * Test schema
+ * @typedef {object} CustomError
+ * @property {string} message
+ */
+
+/**
+ * Test schema
+ * @typedef {object} TestSchema
+ * @property {string|number|CustomError} value - Property with multiple type support
+ */
+
+/**
+ * GET /api/v1/internal/reference
+ * @summary This is the summary or description of the endpoint
+ * @tags album
+ * @return {TestSchema|PopSong} 200 - success response - application/json
+ */
+app.get('/api/v1/internal/reference', (req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));

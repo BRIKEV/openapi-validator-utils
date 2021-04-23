@@ -22,8 +22,13 @@ const formatExceptions = (key, values) => {
   if (EXCEPTIONS.includes(key)) {
     return {
       [key]: values
-        .map(value => formatRefKey('$ref', value.$ref))
-        .filter(({ $ref }) => $ref),
+        .map(value => {
+          if (value.type) {
+            return value;
+          }
+          return formatRefKey('$ref', value.$ref);
+        })
+        .filter(({ $ref, type }) => $ref || type),
     };
   }
   return {};

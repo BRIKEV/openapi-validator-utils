@@ -48,10 +48,25 @@ describe('ValidateRequest method', () => {
   });
 
   describe('validate combined schemas', () => {
-    it('throw an error when validating combined schemas', () => {
+    it('should throw an error when validating combined schemas', () => {
       expect(() => {
         validateResponse({ id: 'id' }, '/api/v1/song/{id}', 'get', 200, 'application/json');
       }).toThrow('Error in response: Schema IntrumentalSong should have required property \'title\', Schema PopSong should have required property \'title\', should match exactly one schema in oneOf. You provide "{"id":"id"}"');
+    });
+
+    it('should throw an error when validating combined inside a different schemas', () => {
+      expect(() => {
+        validateResponse({ value: false }, '/api/v1/internal/reference', 'get', 200, 'application/json');
+      }).toThrow('Error in response: should be string, should be number, Schema CustomError should be object, should match exactly one schema in oneOf, Schema PopSong should have required property \'title\', should match exactly one schema in oneOf. You provide "{"value":false}"');
+    });
+
+    it.skip('should not throw an error when validating combined inside a different schemas', () => {
+      let result = validateResponse({ title: 'title' }, '/api/v1/internal/reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+      result = validateResponse({ value: 1 }, '/api/v1/internal/reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+      result = validateResponse({ value: { message: 'valid message' } }, '/api/v1/internal/reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
     });
   });
 });
