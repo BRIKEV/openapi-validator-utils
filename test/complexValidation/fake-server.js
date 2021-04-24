@@ -111,7 +111,7 @@ app.get('/api/v1/song/:id', (req, res) => (
 /**
  * Test schema
  * @typedef {object} TestSchema
- * @property {string|number|CustomError} value - Property with multiple type support
+ * @property {string|number|CustomError} value.required - Property with multiple type support
  */
 
 /**

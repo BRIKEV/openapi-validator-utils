@@ -60,7 +60,7 @@ describe('ValidateRequest method', () => {
       }).toThrow('Error in response: must be string, must be number, Schema CustomError must be object, must match exactly one schema in oneOf, Schema PopSong must have required property \'title\', must match exactly one schema in oneOf. You provide "{"value":false}"');
     });
 
-    it.skip('should not throw an error when validating combined inside a different schemas', () => {
+    it('should not throw an error when validating combined inside a different schemas', () => {
       let result = validateResponse({ title: 'title' }, '/api/v1/internal/reference', 'get', 200, 'application/json');
       expect(result).toBeTruthy();
       result = validateResponse({ value: 1 }, '/api/v1/internal/reference', 'get', 200, 'application/json');

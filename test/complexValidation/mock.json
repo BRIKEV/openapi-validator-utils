@@ -112,6 +112,9 @@
       },
       "TestSchema": {
         "description": "Test schema",
+        "required": [
+          "value"
+        ],
         "type": "object",
         "properties": {
           "value": {
