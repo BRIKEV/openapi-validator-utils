@@ -132,6 +132,31 @@
             ]
           }
         }
+      },
+      "ObjectReference": {
+        "description": "Object schema",
+        "type": "object",
+        "properties": {
+          "message": {
+            "description": "",
+            "type": "string"
+          }
+        }
+      },
+      "ObjectReferenceResponse": {
+        "description": "Object schema",
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "",
+            "type": "string"
+          },
+          "objectReference": {
+            "description": "",
+            "nullable": true,
+            "$ref": "#/components/schemas/ObjectReference"
+          }
+        }
       }
     }
   },
@@ -348,6 +373,29 @@
                       "$ref": "#/components/schemas/PopSong"
                     }
                   ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "tags": [
+          "album"
+        ]
+      }
+    },
+    "/api/v1/object/reference": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectReferenceResponse"
                 }
               }
             }

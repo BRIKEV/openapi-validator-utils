@@ -68,5 +68,18 @@ describe('ValidateRequest method', () => {
       result = validateResponse({ value: { message: 'valid message' } }, '/api/v1/internal/reference', 'get', 200, 'application/json');
       expect(result).toBeTruthy();
     });
+
+    it('validate combined schema when it is null reference and object', () => {
+      let result = validateResponse({
+        title: 'example',
+        objectReference: null,
+      }, '/api/v1/object/reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+      result = validateResponse({
+        title: 'example',
+        objectReference: { message: 'object reference message' },
+      }, '/api/v1/object/reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+    });
   });
 });
