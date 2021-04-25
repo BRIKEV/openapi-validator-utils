@@ -1,7 +1,7 @@
 const Ajv = require('ajv').default;
 const addFormats = require('ajv-formats');
 const {
-  formatReferences,
+  formatComponents,
   configError,
 } = require('./utils');
 const {
@@ -81,10 +81,11 @@ const validate = (openApiDef, options = {}) => {
   configError(inputValidationError, errorHandler);
   const optionsValidationError = optionsValidation(options);
   configError(optionsValidationError, errorHandler);
+  const schemaOptions = { strictValidation: options.strictValidation || true };
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
-      components: formatReferences(openApiDef.components),
+      components: formatComponents(openApiDef.components, schemaOptions),
     },
   };
   const ajv = new Ajv({
@@ -127,7 +128,7 @@ const validate = (openApiDef, options = {}) => {
     let responseSchema = {
       ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
-    responseSchema = formatReferences(responseSchema);
+    responseSchema = formatComponents(responseSchema);
     return schemaValidation(value, responseSchema, 'response');
   };
 
@@ -156,7 +157,7 @@ const validate = (openApiDef, options = {}) => {
     let requestBodySchema = {
       ...openApiDef.paths[endpoint][method].requestBody.content[contentType].schema,
     };
-    requestBodySchema = formatReferences(requestBodySchema);
+    requestBodySchema = formatComponents(requestBodySchema);
     return schemaValidation(value, requestBodySchema, 'request');
   };
 
@@ -166,7 +167,7 @@ const validate = (openApiDef, options = {}) => {
     const paramEndpoint = endpointValidation.params(openApiDef, endpoint, method, key, type);
     configError(paramEndpoint, errorHandler);
     let parametersSchema = paramEndpoint.parameter.schema;
-    parametersSchema = formatReferences(parametersSchema);
+    parametersSchema = formatComponents(parametersSchema);
     return schemaValidation(value, parametersSchema, type);
   };
 
