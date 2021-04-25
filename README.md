@@ -17,7 +17,7 @@ You can checkout more info about this method in our [Docs link](https://brikev.g
 | Name        | Type   | Description        |
 | ------------|:------:| ------------------:|
 | openApiDef  | object | OpenAPI definition |
-| options     | object | Options to extend the errorHandler or Ajv configuration |
+| options     | object | Options to extend the errorHandler, strictValidation or Ajv configuration |
 
 
 **Returns:**
