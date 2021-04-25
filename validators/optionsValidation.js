@@ -3,7 +3,7 @@ const { responseBuilder } = require('../utils');
 
 /** @module Validators/optionsValidation */
 
-const validOptions = ['ajvConfig', 'errorHandler'];
+const validOptions = ['ajvConfig', 'errorHandler', 'strictValidation'];
 
 /**
  * This method validates the extra options. We only allow "ajvConfig" and "errorHandler" as
