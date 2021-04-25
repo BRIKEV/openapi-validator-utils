@@ -77,10 +77,21 @@ describe('ValidateRequest method', () => {
     it('should throw errors when internal reference type is not valid', () => {
       expect(() => {
         validateRequest({
-          name: 'author name',
+          name: 'song name',
           songs: [{ invalidKey: 'test' }],
         }, '/api/v1/author/songs', 'post');
-      }).toThrow('Error in request: Schema Song must have required property \'title\'. You provide "{"name":"author name","songs":[{"invalidKey":"test"}]}"');
+      }).toThrow('Error in request: Schema Song must have required property \'title\'. You provide "{"name":"song name","songs":[{"invalidKey":"test"}]}"');
+    });
+
+    it('should throw errors when we send extra property', () => {
+      expect(() => {
+        validateRequest({
+          title: 'song title',
+          artist: 'artist',
+          year: 1993,
+          extraInvalidProperty: 'non valid property',
+        }, '/api/v1/songs', 'post');
+      }).toThrow('Error in request: Schema Song must NOT have additional properties. You provide "{"title":"song title","artist":"artist","year":1993,"extraInvalidProperty":"non valid property"}"');
     });
 
     it('should throw errors when reference type is not valid as an empty array', () => {
