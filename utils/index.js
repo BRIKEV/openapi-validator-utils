@@ -4,6 +4,7 @@ const formatSchemaMessage = require('./formatSchemaMessage');
 const configError = require('./configError');
 const formatComponents = require('./formatComponents');
 const existValue = require('./existValue');
+const sanitizeValueSchema = require('./sanitizeValueSchema');
 
 module.exports = {
   configError,
@@ -12,4 +13,5 @@ module.exports = {
   formatComponents,
   responseBuilder,
   formatSchemaMessage,
+  sanitizeValueSchema,
 };

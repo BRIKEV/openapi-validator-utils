@@ -5,8 +5,8 @@ const mock = require('./mock.json');
  * All the endpoints we are using, you can find them in the fake-server.js file
  * And the OpenAPI JSON in the mock.json
  */
-describe('validateQueryParam method', () => {
-  const { validateQueryParam } = validator(mock);
+describe('validateParams method', () => {
+  const { validateQueryParam, validatePathParam } = validator(mock);
   describe('validate method args', () => {
     it('validate when "value" is not send', () => {
       expect(() => {
@@ -85,6 +85,13 @@ describe('validateQueryParam method', () => {
       expect(() => {
         validateQueryParam('MIT', 'licenses', '/api/v1/albums', 'get');
       }).toThrow('Missing query parameter: licenses in Method: "get" and Endpoint: "/api/v1/albums"');
+    });
+  });
+
+  describe('validate path param as number', () => {
+    it('should validate basic string type with the enum value', () => {
+      const result = validatePathParam('1', 'name', '/api/v1/{id}', 'get');
+      expect(result).toBeTruthy();
     });
   });
 });

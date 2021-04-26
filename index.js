@@ -3,6 +3,7 @@ const addFormats = require('ajv-formats');
 const {
   formatComponents,
   configError,
+  sanitizeValueSchema,
 } = require('./utils');
 const {
   argsValidation,
@@ -168,7 +169,8 @@ const validate = (openApiDef, options = {}) => {
     configError(paramEndpoint, errorHandler);
     let parametersSchema = paramEndpoint.parameter.schema;
     parametersSchema = formatComponents(parametersSchema);
-    return schemaValidation(value, parametersSchema, type);
+    const sanitizeValue = sanitizeValueSchema(value, parametersSchema);
+    return schemaValidation(sanitizeValue, parametersSchema, type);
   };
 
   return {
