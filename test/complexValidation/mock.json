@@ -395,7 +395,45 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ObjectReferenceResponse"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ObjectReferenceResponse"
+                    },
+                    {
+                      "type": "boolean"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "tags": [
+          "album"
+        ]
+      }
+    },
+    "/api/v1/object/multiple/null-reference": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "nullable": true,
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ObjectReferenceResponse"
+                    },
+                    {
+                      "type": "boolean"
+                    }
+                  ]
                 }
               }
             }

@@ -80,6 +80,23 @@ describe('ValidateRequest method', () => {
         objectReference: { message: 'object reference message' },
       }, '/api/v1/object/reference', 'get', 200, 'application/json');
       expect(result).toBeTruthy();
+      result = validateResponse(false, '/api/v1/object/reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+    });
+
+    it('validate combined schema when it has oneOf and null reference object', () => {
+      let result = validateResponse({
+        title: 'example',
+        objectReference: null,
+      }, '/api/v1/object/multiple/null-reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+      result = validateResponse({
+        title: 'example',
+        objectReference: { message: 'object reference message' },
+      }, '/api/v1/object/multiple/null-reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
+      result = validateResponse(false, '/api/v1/object/multiple/null-reference', 'get', 200, 'application/json');
+      expect(result).toBeTruthy();
     });
   });
 });
