@@ -143,9 +143,21 @@ app.get('/api/v1/internal/reference', (req, res) => (
  * GET /api/v1/object/reference
  * @summary This is the summary or description of the endpoint
  * @tags album
- * @return {ObjectReferenceResponse} 200 - success response - application/json
+ * @return {ObjectReferenceResponse|boolean} 200 - success response - application/json
  */
 app.get('/api/v1/object/reference', (req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
+
+/**
+ * GET /api/v1/object/multiple/null-reference
+ * @summary This is the summary or description of the endpoint
+ * @tags album
+ * @return {ObjectReferenceResponse|boolean|null} 200 - success response - application/json
+ */
+app.get('/api/v1/object/multiple/null-reference', (req, res) => (
   res.json({
     title: 'abum 1',
   })

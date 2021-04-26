@@ -72,6 +72,16 @@ const formatNullable = payload => {
       ],
     };
   }
+  const keyException = Object.keys(rest).find(key => EXCEPTIONS.includes(key));
+  if (nullable && keyException) {
+    return {
+      ...rest,
+      [keyException]: [
+        ...rest[keyException],
+        { type: 'null' },
+      ],
+    };
+  }
   return payload;
 };
 
