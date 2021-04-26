@@ -35,6 +35,47 @@ const formatExceptions = (key, values) => {
 };
 
 /**
+ * Method to format nullable objects
+ * When we receive and object like this:
+ * {
+ *   "objectReference": {
+ *     "description": "",
+ *     "nullable": true,
+ *     "$ref": "#/components/schemas/ObjectReference"
+ *   }
+ * }
+ * We format the object to use a valid AJV type
+ * {
+ *   "objectReference": {
+ *     "description": "",
+ *     "nullable": true,
+ *     "anyOf": [
+ *       {
+ *         "$ref": "#/components/schemas/ObjectReference"
+ *       },
+ *       {
+ *          "type": "null"
+ *        }
+ *     ]
+ *   }
+ * }
+ * @param {object} OpenAPI definition to format
+ */
+const formatNullable = payload => {
+  const { nullable, $ref, ...rest } = payload;
+  if (nullable && $ref) {
+    return {
+      ...rest,
+      anyOf: [
+        { $ref },
+        { type: 'null' },
+      ],
+    };
+  }
+  return payload;
+};
+
+/**
  * This method modifies all the references in the OpenAPI code
  * @param {object} OpenAPI definition to format
  * @returns {object}
@@ -42,12 +83,12 @@ const formatExceptions = (key, values) => {
 const formatReferences = payload => {
   const newObject = cloneDeep(payload);
   return Object.keys(newObject).reduce((acum, key) => (
-    {
+    formatNullable({
       ...acum,
       [key]: isPlainObject(newObject[key]) ? formatReferences(newObject[key]) : newObject[key],
       ...formatRefKey(key, newObject[key]),
       ...formatExceptions(key, newObject[key]),
-    }
+    })
   ), {});
 };
 

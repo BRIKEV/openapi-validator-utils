@@ -58,6 +58,11 @@ describe('ValidateRequest method', () => {
     });
 
     it('should validate object type with reference', () => {
+      const result = validateRequest({ title: 'request title' }, '/api/v1/songs', 'post');
+      expect(result).toBeTruthy();
+    });
+
+    it('should validate object type with reference and nullable value', () => {
       const result = validateRequest({ title: null }, '/api/v1/songs', 'post');
       expect(result).toBeTruthy();
     });

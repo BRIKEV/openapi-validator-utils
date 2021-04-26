@@ -125,3 +125,28 @@ app.get('/api/v1/internal/reference', (req, res) => (
     title: 'abum 1',
   })
 ));
+
+/**
+ * Object schema
+ * @typedef {object} ObjectReference
+ * @property {string} message
+ */
+
+/**
+ * Object schema
+ * @typedef {object} ObjectReferenceResponse
+ * @property {string} title
+ * @property {ObjectReference|null} objectReference
+ */
+
+/**
+ * GET /api/v1/object/reference
+ * @summary This is the summary or description of the endpoint
+ * @tags album
+ * @return {ObjectReferenceResponse} 200 - success response - application/json
+ */
+app.get('/api/v1/object/reference', (req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
