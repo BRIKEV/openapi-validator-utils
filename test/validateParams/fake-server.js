@@ -36,6 +36,14 @@ instance.on('finish', data => {
 app.get('/api/v1', (req, res) => res.send('Hello World!'));
 
 /**
+ * GET /api/v1/{id}
+ * @summary This is the summary or description of the endpoint
+ * @param {number} name.path.required - name param description
+ * @return {string} 200 - success response
+ */
+app.get('/api/v1/:id', (req, res) => res.send('Hello World!'));
+
+/**
  * GET /api/v1/albums
  * @summary This is the summary or description of the endpoint
  * @param {string} name.query.required - name param description - enum:type1,type2
