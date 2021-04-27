@@ -1,3 +1,4 @@
+![npm](https://img.shields.io/npm/v/openapi-validator-utils)
 [![Build](https://github.com/BRIKEV/openapi-validator-utils/actions/workflows/runTests.yml/badge.svg)](https://github.com/BRIKEV/openapi-validator-utils/actions/workflows/runTests.yml)
 [![Known Vulnerabilities](https://snyk.io/test/github/BRIKEV/openapi-validator-utils/badge.svg)](https://snyk.io/test/github/BRIKEV/openapi-validator-utils)
 [![Maintainability](https://api.codeclimate.com/v1/badges/efee2f09c8c1887ccbf9/maintainability)](https://codeclimate.com/github/BRIKEV/openapi-validator-utils/maintainability)
