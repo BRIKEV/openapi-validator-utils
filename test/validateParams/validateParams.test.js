@@ -89,9 +89,26 @@ describe('validateParams method', () => {
   });
 
   describe('validate path param as number', () => {
-    it('should validate basic string type with the enum value', () => {
+    it('should validate basic number type with a number even if it is string', () => {
       const result = validatePathParam('1', 'name', '/api/v1/{id}', 'get');
       expect(result).toBeTruthy();
+    });
+
+    it('should throw error when path param is not valid', () => {
+      expect(() => {
+        validatePathParam('non-valid', 'name', '/api/v1/{id}', 'get');
+      }).toThrow('Error in path: must be number. You provide "non-valid"');
+    });
+
+    it('should validate basic boolean type with a string boolean', () => {
+      const result = validatePathParam('true', 'name', '/api/v2/{id}', 'get');
+      expect(result).toBeTruthy();
+    });
+
+    it('should throw error when boolean path param is not valid', () => {
+      expect(() => {
+        validatePathParam('non-valid', 'name', '/api/v2/{id}', 'get');
+      }).toThrow('Error in path: must be boolean. You provide "non-valid"');
     });
   });
 });
