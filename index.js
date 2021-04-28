@@ -1,5 +1,6 @@
 const Ajv = require('ajv').default;
 const addFormats = require('ajv-formats');
+const defaultOptions = require('./config/default');
 const {
   formatComponents,
   configError,
@@ -53,7 +54,7 @@ const {
 /**
  * @name ValidateRequiredValues
  * @function
-  * @param {*} value Values we want to see if are send as required parameters
+ * @param {*} value Values we want to see if are send as required parameters
  * @param {string} endpoint OpenApi endpoint we want to validate
  * @param {string} method OpenApi method we want to validate
  */
@@ -76,13 +77,19 @@ const {
  * @param {object} options Options to extend the errorHandler or Ajv configuration
  * @returns {ValidatorMethods} validator methods
  */
-const validate = (openApiDef, options = {}) => {
+const validate = (openApiDef, userOptions = {}) => {
+  const options = {
+    ...defaultOptions,
+    ...(userOptions || {}),
+  };
+
+  const { errorHandler } = options;
   const inputValidationError = inputValidation(openApiDef);
-  const errorHandler = options ? options.errorHandler : null;
   configError(inputValidationError, errorHandler);
-  const optionsValidationError = optionsValidation(options);
+  const optionsValidationError = optionsValidation(userOptions);
   configError(optionsValidationError, errorHandler);
-  const schemaOptions = { strictValidation: options.strictValidation || true };
+
+  const schemaOptions = { strictValidation: options.strictValidation };
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
