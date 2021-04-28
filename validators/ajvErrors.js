@@ -29,9 +29,13 @@ const arrayMessage = (message, schemaPath) => {
   return message;
 };
 
+/**
+ * This method formats the message when there is an extra property
+ * @param {string} property invalid extra property
+ */
 const additionalProperties = property => {
   if (property) {
-    return `, invalid property ${property}`;
+    return `, invalid property "${property}"`;
   }
   return '';
 };
