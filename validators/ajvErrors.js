@@ -30,13 +30,24 @@ const arrayMessage = (message, schemaPath) => {
 };
 
 /**
+ * This method formats the message when there is an extra property
+ * @param {string} property invalid extra property
+ */
+const additionalProperties = property => {
+  if (property) {
+    return `, invalid property "${property}"`;
+  }
+  return '';
+};
+
+/**
  * This methods format the AJV error
  * @param {object[]} errors Ajv errors
  * @returns {string} Error message
  */
 const formatArrayError = errors => (
   errors.map(({ message, params, schemaPath }) => (
-    `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}`
+    `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}${additionalProperties(params.additionalProperty)}`
   )).join(', ')
 );
 
