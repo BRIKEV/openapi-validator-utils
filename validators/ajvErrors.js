@@ -29,6 +29,13 @@ const arrayMessage = (message, schemaPath) => {
   return message;
 };
 
+const additionalProperties = property => {
+  if (property) {
+    return `, invalid property ${property}`;
+  }
+  return '';
+};
+
 /**
  * This methods format the AJV error
  * @param {object[]} errors Ajv errors
@@ -36,7 +43,7 @@ const arrayMessage = (message, schemaPath) => {
  */
 const formatArrayError = errors => (
   errors.map(({ message, params, schemaPath }) => (
-    `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}`
+    `${arrayMessage(message, schemaPath)}${enumValues(params.allowedValues)}${additionalProperties(params.additionalProperty)}`
   )).join(', ')
 );
 

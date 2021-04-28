@@ -96,7 +96,7 @@ describe('ValidateRequest method', () => {
           year: 1993,
           extraInvalidProperty: 'non valid property',
         }, '/api/v1/songs', 'post');
-      }).toThrow('Error in request: Schema Song must NOT have additional properties. You provide "{"title":"song title","artist":"artist","year":1993,"extraInvalidProperty":"non valid property"}"');
+      }).toThrow('Error in request: Schema Song must NOT have additional properties, invalid property extraInvalidProperty. You provide "{"title":"song title","artist":"artist","year":1993,"extraInvalidProperty":"non valid property"}"');
     });
 
     it('should throw errors when reference type is not valid as an empty array', () => {
