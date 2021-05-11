@@ -43,7 +43,7 @@ app.post('/api/v1/songs', (req, res) => res.json({}));
  * @property {string} title.required - The title
  * @property {string} artist - The artist
  * @property {string} cover - image cover - binary
- * @property {integer} year - The year - int64
+ * @property {number} year - The year - double
  */
 
 /**
