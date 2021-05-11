@@ -35,8 +35,8 @@
           },
           "year": {
             "description": "The year",
-            "type": "integer",
-            "format": "int64"
+            "type": "number",
+            "format": "double"
           }
         }
       },

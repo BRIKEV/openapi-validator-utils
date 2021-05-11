@@ -1,5 +1,9 @@
+const fs = require('fs');
+const path = require('path');
 const validator = require('../..');
 const mock = require('./mock.json');
+
+const binary = fs.readFileSync(path.join(__dirname, 'mock.json'), 'binary').toString('binary');
 
 /**
  * All the endpoints we are using, you can find them in the fake-server.js file
@@ -13,11 +17,15 @@ describe('ValidateRequest method', () => {
     }).toThrow('Error in request: must have required property \'title\'. You provide "{"id":"id"}"');
   });
 
-  // We have to skip this test until this issue is solved https://github.com/ajv-validator/ajv-formats/issues/25
-  it.skip('validate form-data params', () => {
+  it('validate form-data required param', () => {
     expect(() => {
       validateRequest({ id: 'id' }, '/api/v1/album', 'post', 'multipart/form-data');
-    }).toThrow('Error in request: should have required property \'title\'. You provide "{"id":"id"}"');
+    }).toThrow('Error in request: Schema Song must have required property \'title\'. You provide "{"id":"id"}"');
+  });
+
+  it('validate form-data params', () => {
+    const result = validateRequest({ title: 'title', year: 1.2, cover: binary }, '/api/v1/album', 'post', 'multipart/form-data');
+    expect(result).toBeTruthy();
   });
 
   it('validate date type with $ref object', () => {
