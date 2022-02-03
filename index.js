@@ -104,12 +104,15 @@ const validate = (openApiDef, userOptions = {}) => {
 
   // Obtain method to validate against a given schema
   const getSchemaValidator = (schemaName, schema) => {
+    let validateSchema = ajv.getSchema(schemaName);
+
     // Compile schema just once, only if it hasn't been defined previously
-    if (!ajv.getSchema(schemaName)) {
+    if (!validateSchema) {
       ajv.addSchema(schema, schemaName);
+      validateSchema = ajv.getSchema(schemaName);
     }
 
-    return ajv.getSchema(schemaName);
+    return validateSchema;
   };
 
   // Validate is current value matches the structure in the selected schema
