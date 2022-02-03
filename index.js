@@ -102,10 +102,23 @@ const validate = (openApiDef, userOptions = {}) => {
   });
   addFormats(ajv);
 
-  const schemaValidation = (value, schema, type) => {
-    const validateSchema = ajv.compile(schema);
+  // Obtain method to validate against a given schema
+  const getSchemaValidator = (schemaName, schema) => {
+    // Compile schema just once, only if it hasn't been defined previously
+    if (!ajv.getSchema(schemaName)) {
+      ajv.addSchema(schema, schemaName);
+    }
+
+    return ajv.getSchema(schemaName);
+  };
+
+  // Validate is current value matches the structure in the selected schema
+  const schemaValidation = (value, schema, type, schemaName) => {
+    const validateSchema = getSchemaValidator(schemaName, schema);
     const valid = validateSchema(value);
-    if (!valid) return ajvErrors(validateSchema.errors, value, type, errorHandler);
+    if (!valid) {
+      return ajvErrors(validateSchema.errors, value, type, errorHandler);
+    }
     return true;
   };
 
@@ -137,7 +150,8 @@ const validate = (openApiDef, userOptions = {}) => {
       ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
     responseSchema = formatComponents(responseSchema);
-    return schemaValidation(value, responseSchema, 'response');
+    const schemaName = `${method}-${endpoint}-${status}-${contentType}-response`;
+    return schemaValidation(value, responseSchema, 'response', schemaName);
   };
 
   const isRequestRequired = (endpoint, method, contentType = 'application/json') => {
@@ -166,7 +180,8 @@ const validate = (openApiDef, userOptions = {}) => {
       ...openApiDef.paths[endpoint][method].requestBody.content[contentType].schema,
     };
     requestBodySchema = formatComponents(requestBodySchema);
-    return schemaValidation(value, requestBodySchema, 'request');
+    const schemaName = `${method}-${endpoint}-${contentType}-request`;
+    return schemaValidation(value, requestBodySchema, 'request', schemaName);
   };
 
   const validateParam = type => (value, key, endpoint, method) => {
@@ -177,7 +192,8 @@ const validate = (openApiDef, userOptions = {}) => {
     let parametersSchema = paramEndpoint.parameter.schema;
     parametersSchema = formatComponents(parametersSchema);
     const sanitizeValue = sanitizeValueSchema(value, parametersSchema);
-    return schemaValidation(sanitizeValue, parametersSchema, type);
+    const schemaName = `${method}-${endpoint}-${type}-params`;
+    return schemaValidation(sanitizeValue, parametersSchema, type, schemaName);
   };
 
   return {
