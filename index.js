@@ -104,13 +104,15 @@ const validate = (openApiDef, userOptions = {}) => {
 
   // Obtain method to validate against a given schema
   const getSchemaValidator = (schemaName, schema) => {
-    const formatSchemaName = schemaName.replace(/\//g, '-');
-    let validateSchema = ajv.getSchema(formatSchemaName);
+    // Slashes (/) are not supported in schema names, so we must replace them
+    const validSchemaName = schemaName.replace(/\//g, '-');
+
+    let validateSchema = ajv.getSchema(validSchemaName);
 
     // Compile schema just once, only if it hasn't been defined previously
     if (!validateSchema) {
-      ajv.addSchema(schema, formatSchemaName);
-      validateSchema = ajv.getSchema(formatSchemaName);
+      ajv.addSchema(schema, validSchemaName);
+      validateSchema = ajv.getSchema(validSchemaName);
     }
 
     return validateSchema;
