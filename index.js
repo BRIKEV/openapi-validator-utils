@@ -104,12 +104,13 @@ const validate = (openApiDef, userOptions = {}) => {
 
   // Obtain method to validate against a given schema
   const getSchemaValidator = (schemaName, schema) => {
-    let validateSchema = ajv.getSchema(schemaName);
+    const formatSchemaName = schemaName.replace(/\//g, '-');
+    let validateSchema = ajv.getSchema(formatSchemaName);
 
     // Compile schema just once, only if it hasn't been defined previously
     if (!validateSchema) {
-      ajv.addSchema(schema, schemaName);
-      validateSchema = ajv.getSchema(schemaName);
+      ajv.addSchema(schema, formatSchemaName);
+      validateSchema = ajv.getSchema(formatSchemaName);
     }
 
     return validateSchema;
@@ -195,7 +196,7 @@ const validate = (openApiDef, userOptions = {}) => {
     let parametersSchema = paramEndpoint.parameter.schema;
     parametersSchema = formatComponents(parametersSchema);
     const sanitizeValue = sanitizeValueSchema(value, parametersSchema);
-    const schemaName = `${method}-${endpoint}-${type}-params`;
+    const schemaName = `${method}-${endpoint}-${key}-${type}-params`;
     return schemaValidation(sanitizeValue, parametersSchema, type, schemaName);
   };
 

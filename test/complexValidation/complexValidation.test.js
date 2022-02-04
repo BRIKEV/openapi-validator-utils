@@ -49,7 +49,7 @@ describe('ValidateRequest method', () => {
       expect(result).toBeTruthy();
     });
 
-    it('should not return with email', () => {
+    it('should not return error with email', () => {
       const result = validateQueryParam('test@test.com', 'email', '/api/v1/date', 'get');
       expect(result).toBeTruthy();
     });
