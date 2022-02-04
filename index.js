@@ -198,7 +198,7 @@ const validate = (openApiDef, userOptions = {}) => {
     let parametersSchema = paramEndpoint.parameter.schema;
     parametersSchema = formatComponents(parametersSchema);
     const sanitizeValue = sanitizeValueSchema(value, parametersSchema);
-    const schemaName = `${method}-${endpoint}-${key}-${type}-params`;
+    const schemaName = `${method}-${endpoint}-${key}-${type}-param`;
     return schemaValidation(sanitizeValue, parametersSchema, type, schemaName);
   };
 
