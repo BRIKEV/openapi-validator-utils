@@ -1,6 +1,6 @@
 {
   "name": "openapi-validator-utils",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "OpenAPI request, parameters, headers and response validator methods",
   "main": "index.js",
   "dependencies": {
