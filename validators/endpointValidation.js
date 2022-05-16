@@ -17,7 +17,7 @@ const common = (definition, endpoint, method, type) => {
   if (!definition.paths[endpoint][method]) {
     return responseBuilder(false, `Method: "${method}" not found in the OpenAPI definition for "${endpoint}" endpoint`);
   }
-  if (!definition.paths[endpoint][method][type]) {
+  if ((type === 'parameters' && !(definition.paths[endpoint][type] || definition.paths[endpoint][method][type])) || !definition.paths[endpoint][method][type]) {
     return responseBuilder(false, `Method: "${method}" and Endpoint: "${endpoint}" does not have ${type} definition`);
   }
   return responseBuilder(true);
@@ -75,7 +75,9 @@ const params = (definition, endpoint, method, key, type) => {
   if (!commonValidation.valid) {
     return commonValidation;
   }
-  const parameter = definition.paths[endpoint][method].parameters
+  const endpointParameters = definition.paths[endpoint].parameters || [];
+  const methodParameters = definition.paths[endpoint][method].parameters || [];
+  const parameter = endpointParameters.concat(methodParameters)
     .filter(({ in: paramType }) => paramType === type)
     .find(({ name }) => name === key);
   if (!parameter) {

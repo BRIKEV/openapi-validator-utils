@@ -110,6 +110,17 @@ describe('validateParams method', () => {
         validatePathParam('non-valid', 'name', '/api/v2/{id}', 'get');
       }).toThrow('Error in path: must be boolean. You provide "non-valid"');
     });
+
+    it('should be valid. Param is defined at endpoint level', () => {
+      expect(() => {
+        validatePathParam(12345, 'id', '/api/v2/albums/{id}', 'get');
+      }).toBeTruthy();
+    });
+    it('should throw error. no parameter definition at endpoint level', () => {
+      expect(() => {
+        validatePathParam(12345, 'id', '/api/v3/albums/{id}', 'get');
+      }).toThrow('Method: "get" and Endpoint: "/api/v3/albums/{id}" does not have parameters definition');
+    });
   });
 });
 

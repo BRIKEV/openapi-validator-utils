@@ -209,6 +209,58 @@
         ],
         "tags": []
       }
+    },
+    "/api/v2/albums/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "",
+          "required": false,
+          "deprecated": false,
+          "schema": {
+            "type": "number"
+          }
+        }
+      ],
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
+    },
+    "/api/v3/albums/{id}": {
+      "get": {
+        "deprecated": false,
+        "summary": "This is the summary or description of the endpoint",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": []
+      }
     }
   },
   "tags": []
