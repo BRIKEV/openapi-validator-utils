@@ -89,7 +89,13 @@ const validate = (openApiDef, userOptions = {}) => {
   const optionsValidationError = optionsValidation(userOptions);
   configError(optionsValidationError, errorHandler);
 
-  const schemaOptions = { strictValidation: options.strictValidation };
+  const schemaOptions = {
+    strictValidation: options.strictValidation,
+    discriminatorMappingSupported: options.discriminatorMappingSupported,
+  };
+  const discriminatorOptions = {
+    discriminatorMappingSupported: options.discriminatorMappingSupported,
+  };
   const defsSchema = {
     $id: 'defs.json',
     definitions: {
@@ -155,7 +161,7 @@ const validate = (openApiDef, userOptions = {}) => {
     let responseSchema = {
       ...openApiDef.paths[endpoint][method].responses[status].content[contentType].schema,
     };
-    responseSchema = formatComponents(responseSchema);
+    responseSchema = formatComponents(responseSchema, discriminatorOptions);
     const schemaName = `${method}-${endpoint}-${status}-${contentType}-response`;
     return schemaValidation(value, responseSchema, 'response', schemaName);
   };
@@ -185,7 +191,7 @@ const validate = (openApiDef, userOptions = {}) => {
     let requestBodySchema = {
       ...openApiDef.paths[endpoint][method].requestBody.content[contentType].schema,
     };
-    requestBodySchema = formatComponents(requestBodySchema);
+    requestBodySchema = formatComponents(requestBodySchema, discriminatorOptions);
     const schemaName = `${method}-${endpoint}-${contentType}-request`;
     return schemaValidation(value, requestBodySchema, 'request', schemaName);
   };
@@ -196,7 +202,7 @@ const validate = (openApiDef, userOptions = {}) => {
     const paramEndpoint = endpointValidation.params(openApiDef, endpoint, method, key, type);
     configError(paramEndpoint, errorHandler);
     let parametersSchema = paramEndpoint.parameter.schema;
-    parametersSchema = formatComponents(parametersSchema);
+    parametersSchema = formatComponents(parametersSchema, discriminatorOptions);
     const sanitizeValue = sanitizeValueSchema(value, parametersSchema);
     const schemaName = `${method}-${endpoint}-${key}-${type}-param`;
     return schemaValidation(sanitizeValue, parametersSchema, type, schemaName);
