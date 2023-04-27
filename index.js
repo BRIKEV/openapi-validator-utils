@@ -77,10 +77,14 @@ const {
  * @param {object} options Options to extend the errorHandler or Ajv configuration
  * @returns {ValidatorMethods} validator methods
  */
-const validate = (openApiDef, userOptions = {}) => {
+const validate = (openApiDef, userOptions = { ajvConfig: {} }) => {
   const options = {
     ...defaultOptions,
     ...(userOptions || {}),
+    ajvConfig: {
+      ...defaultOptions.ajvConfig,
+      ...(userOptions?.ajvConfig || {}),
+    },
   };
 
   const { errorHandler } = options;
