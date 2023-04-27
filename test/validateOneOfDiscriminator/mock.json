@@ -1,0 +1,187 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Albums store",
+    "description": "Add your description",
+    "license": {
+      "name": "MIT",
+      "url": ""
+    },
+    "termsOfService": "",
+    "version": "1.0.0"
+  },
+  "servers": [],
+  "components": {
+    "schemas": {
+      "Song": {
+        "description": "A song",
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "description": "The title",
+            "type": "string"
+          },
+          "year": {
+            "description": "The year",
+            "type": "number"
+          },
+          "additional": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/InstrumentalSong"
+              },
+              {
+                "$ref": "#/components/schemas/PopSong"
+              }
+            ],
+            "discriminator": {
+              "propertyName": "type",
+              "mapping": {
+                "INSTRUMENTAL": "#/components/schemas/InstrumentalSong",
+                "POP": "#/components/schemas/PopSong"
+              }
+            }
+          }
+        }
+      },
+      "InstrumentalSong": {
+        "description": "Instrumental Song",
+        "required": [
+          "type", "band"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Song type",
+            "enum": [
+              "INSTRUMENTAL"
+            ],
+            "example": "INSTRUMENTAL"
+          },
+          "band": {
+            "description": "The band",
+            "type": "string"
+          }
+        }
+      },
+      "PopSong": {
+        "description": "Pop song",
+        "required": [
+          "type", "artist"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Song type",
+            "enum": [
+              "POP"
+            ],
+            "example": "POP"
+          },
+          "artist": {
+            "description": "The artist",
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/songs": {
+      "post": {
+        "deprecated": false,
+        "summary": "validate requests and responses with oneOf in component definition",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "song response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Song"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "tags": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Song"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/song-types": {
+      "post": {
+        "deprecated": false,
+        "summary": "validate requests and responses with oneOf directly in path definition",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "song response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/InstrumentalSong"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PopSong"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                      "INSTRUMENTAL": "#/components/schemas/InstrumentalSong",
+                      "POP": "#/components/schemas/PopSong"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "tags": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/InstrumentalSong"
+                  },
+                  {
+                    "$ref": "#/components/schemas/PopSong"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "type",
+                  "mapping": {
+                    "INSTRUMENTAL": "#/components/schemas/InstrumentalSong",
+                    "POP": "#/components/schemas/PopSong"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
